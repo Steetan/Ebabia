@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { IVideo } from '../pages/Home'
+import { IVideo } from '../pages/News/News'
 
 export const useVideos = (url: string) => {
 	const fetchVideos = async () => {

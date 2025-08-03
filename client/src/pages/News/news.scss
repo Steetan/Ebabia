@@ -1,0 +1,20 @@
+.news {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	flex-direction: column;
+	&__img img {
+		width: 400px;
+	}
+	&__block {
+		border: 1px solid #000;
+		border-radius: 10px;
+		padding: 30px;
+		gap: 10px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		max-width: 600px;
+	}
+}

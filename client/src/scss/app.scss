@@ -2,13 +2,14 @@
 @import '../components/VideoPrev/videoPrev.scss';
 @import '../components/Logo/Logo.scss';
 @import '../components/Search/search.scss';
+@import '../components/ContentTop/contentTop.scss';
 @import '../pages/NotFound/notFound.scss';
-@import '../components/VideoBlock/videoBlock.scss';
-@import '../components/RecommendsBlock/recomendsBlock.scss';
 @import '../pages/Video/video.scss';
 @import '../components/Aside/aside.scss';
 @import '../components/PopupMenu/popupMenu.scss';
+@import '../pages/FullVideo/fullVideo.scss';
 @import '../pages/UserSettings/userSettings.scss';
+@import '../pages/News/news.scss';
 @import './button.scss';
 
 html,
@@ -28,6 +29,17 @@ body {
 a {
 	text-decoration: none;
 	color: #000;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	padding: 0;
+	margin: 0;
 }
 
 body {
@@ -56,7 +68,7 @@ body {
 
 .container {
 	margin: 0 auto;
-	max-width: 1400px;
+	max-width: 1350px;
 }
 
 .wrapper {

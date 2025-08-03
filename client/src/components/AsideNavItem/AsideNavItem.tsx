@@ -7,9 +7,9 @@ const AsideNavItem: React.FC<{ link: string; title: string }> = ({ link, title }
 	const { isAuth } = useSelector((state: RootState) => state.authSlice)
 
 	return (
-		<p>
-			<Link to={link}>{title}</Link>
-		</p>
+		<Link to={link} className='aside__nav-item'>
+			{title}
+		</Link>
 	)
 }
 

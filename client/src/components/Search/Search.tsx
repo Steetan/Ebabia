@@ -10,9 +10,7 @@ const Search = ({}) => {
 	const redirectPage = () => {
 		navigation(`/quest?search=${searchValue}`)
 	}
-	return location.pathname === '/' ||
-		location.pathname === '/quest' ||
-		location.pathname === '/video' ? (
+	return (
 		<div className='search'>
 			<input
 				type='text'
@@ -24,8 +22,6 @@ const Search = ({}) => {
 				Найти
 			</div>
 		</div>
-	) : (
-		<div></div>
 	)
 }
 

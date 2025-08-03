@@ -1,0 +1,13 @@
+.fullvideo {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	&__block {
+		display: flex;
+		gap: 20px;
+	}
+	&__video {
+		max-width: 500px;
+		height: auto;
+	}
+}

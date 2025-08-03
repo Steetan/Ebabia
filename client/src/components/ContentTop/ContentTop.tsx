@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useVideos } from '../../utils/fetchData'
 import VideoPrev from '../../components/VideoPrev/VideoPrev'
 import Search from '../../components/Search/Search'
-import ContentTop from '../../components/ContentTop/ContentTop'
 
 export interface IVideo {
 	id: string
@@ -13,7 +12,7 @@ export interface IVideo {
 	preview: string
 }
 
-const Video: React.FC = () => {
+const ContentTop: React.FC<{ title: string }> = ({ title }) => {
 	const { data, isLoading, error } = useVideos('')
 	const [fetchData, setFetchData] = useState<IVideo[]>([])
 
@@ -34,15 +33,11 @@ const Video: React.FC = () => {
 	}
 
 	return (
-		<div className='video'>
-			<ContentTop title='Все видео' />
-			<div className='video-block'>
-				{fetchData.map((item: IVideo) => (
-					<VideoPrev key={item.id} {...item} />
-				))}
-			</div>
+		<div className='content-top'>
+			<h1>{title}</h1>
+			<Search />
 		</div>
 	)
 }
 
-export default Video
+export default ContentTop
