@@ -1,0 +1,18 @@
+@import '../../scss/variables.scss';
+
+.header {
+	z-index: 22;
+	position: fixed;
+	width: 100%;
+	background-color: $purple;
+	min-height: 70px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	padding: 5px 10px;
+	&__inner {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 10px;
+	}
+}

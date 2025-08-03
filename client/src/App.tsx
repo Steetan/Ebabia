@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import Layout from './layouts/Layout'
+import './scss/app.scss'
+import Home from './pages/Home'
+import Login from './pages/Login'
+import Registration from './pages/Registration'
+import NotFound from './pages/NotFound/NotFound'
+import Video from './pages/Video/Video'
+import Quest from './pages/Quest/Quest'
+import AddVideo from './pages/AddVideo/AddVideo'
+import UserSettings from './pages/UserSettings/UserSettings'
+import { Route, Routes } from 'react-router-dom'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+	return (
+		<Routes>
+			<Route path='/' element={<Layout />}>
+				<Route path='' element={<Home />} />
+				<Route path='quest' element={<Quest />} />
+				<Route path='video' element={<Video />} />
+				<Route path='addvideo' element={<AddVideo />} />
+				<Route path='auth/login' element={<Login />} />
+				<Route path='auth/reg' element={<Registration />} />
+				<Route path='userset' element={<UserSettings />} />
+				<Route path='*' element={<NotFound />} />
+			</Route>
+		</Routes>
+	)
 }
 
-export default App;
+export default App
