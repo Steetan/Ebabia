@@ -10,7 +10,6 @@ import Cookies from 'js-cookie'
 export interface FormData {
 	title: string
 	description: string
-	category: string
 }
 
 const AddVideo: React.FC = () => {
@@ -32,7 +31,6 @@ const AddVideo: React.FC = () => {
 			const formData = new FormData()
 			formData.append('title', data.title)
 			formData.append('description', data.description)
-			formData.append('category', data.category)
 			formData.append('video', videoFile)
 			formData.append('imageUrl', imgUrl)
 
@@ -101,15 +99,6 @@ const AddVideo: React.FC = () => {
 							variant='outlined'
 							{...register('description')}
 						/>
-						<TextField
-							error={!!errors.category}
-							id='outlined-basic'
-							label='Категория'
-							type='text'
-							variant='outlined'
-							{...register('category', { required: 'Укажите категорию' })}
-						/>
-						{errors.category && <p style={{ color: 'red' }}>{errors.category.message}</p>}
 						{!videoUrl ? (
 							<label htmlFor='file-upload' className='custom-file-upload'>
 								Загрузить видео

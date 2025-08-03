@@ -1,13 +1,21 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { RootState } from '../../redux/store'
 
-const AsideNavItem: React.FC<{ link: string; title: string }> = ({ link, title }) => {
+const AsideNavItem: React.FC<{ link: string; title: string; isActive: boolean }> = ({
+	link,
+	title,
+	isActive,
+}) => {
 	const { isAuth } = useSelector((state: RootState) => state.authSlice)
+	const location = useLocation()
 
 	return (
-		<Link to={link} className='aside__nav-item'>
+		<Link
+			to={link}
+			className={isActive ? 'aside__nav-item aside__nav-item--active' : 'aside__nav-item'}
+		>
 			{title}
 		</Link>
 	)

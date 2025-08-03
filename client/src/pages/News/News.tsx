@@ -5,15 +5,16 @@ export interface IVideo {
 	id: string
 	link: string
 	description?: string
-	category: string
 	title: string
 	preview: string
 }
 
 const News: React.FC = () => {
+	const [fetchData, setFetchData] = React.useState<any>([])
+
 	return (
 		<div className='news'>
-			<ContentTop title='Новости' />
+			<ContentTop title='Новости' setFetchData={setFetchData} />
 			<div className='news__block'>
 				<div className='news__img'>
 					<img src={require('../../assets/placeholder.jpg')} alt='' />

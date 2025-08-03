@@ -1,28 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { useVideos } from '../../utils/fetchData'
 import VideoPrev from '../../components/VideoPrev/VideoPrev'
-import Search from '../../components/Search/Search'
+import { Search } from '../Search/Search'
+import { IVideo } from '../../pages/News/News'
 
-export interface IVideo {
-	id: string
-	link: string
-	description?: string
-	category: string
+const ContentTop: React.FC<{
 	title: string
-	preview: string
-}
-
-const ContentTop: React.FC<{ title: string }> = ({ title }) => {
+	setFetchData: React.Dispatch<React.SetStateAction<IVideo[]>>
+}> = ({ title, setFetchData }) => {
 	const { data, isLoading, error } = useVideos('')
-	const [fetchData, setFetchData] = useState<IVideo[]>([])
 
-	useEffect(() => {
-		if (Array.isArray(data)) {
-			setFetchData(data)
-		} else {
-			setFetchData([])
-		}
-	}, [data])
+	const searchVideo = (fetchData2: IVideo[]) => {
+		setFetchData(fetchData2)
+	}
 
 	if (isLoading) {
 		return <div>Loading...</div>
@@ -35,7 +25,7 @@ const ContentTop: React.FC<{ title: string }> = ({ title }) => {
 	return (
 		<div className='content-top'>
 			<h1>{title}</h1>
-			<Search />
+			<Search setFetchData={setFetchData} />
 		</div>
 	)
 }

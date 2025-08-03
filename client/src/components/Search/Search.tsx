@@ -1,28 +1,46 @@
-import React from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import React, { ChangeEvent } from 'react'
+import debounce from 'lodash.debounce'
+import { RootState, useAppDispatch } from '../../redux/store'
+import { useSelector } from 'react-redux'
 import { customAxios } from '../../utils/axios'
+import { IVideo } from '../../pages/News/News'
 
-const Search = ({}) => {
-	const [searchValue, setSearchValue] = React.useState('')
-	const navigation = useNavigate()
-	const location = useLocation()
+export const Search: React.FC<{
+	setFetchData: React.Dispatch<React.SetStateAction<IVideo[]>>
+}> = ({ setFetchData }) => {
+	const [value, setValue] = React.useState('')
+	const dispatch = useAppDispatch()
+	const inputRef = React.useRef<HTMLInputElement>(null)
+	const { isDarkTheme } = useSelector((state: RootState) => state.authSlice)
 
-	const redirectPage = () => {
-		navigation(`/quest?search=${searchValue}`)
+	const clearInput = () => {
+		setValue('')
+		inputRef.current?.focus()
 	}
+
+	const updateSearchValue = React.useCallback(
+		debounce((str) => {
+			customAxios(`/quest?search=${str}`, 'get').then((fetData) => {
+				setFetchData(fetData)
+			})
+		}, 1000),
+		[],
+	)
+
+	const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+		setValue(e.target.value)
+		updateSearchValue(e.target.value)
+	}
+
 	return (
 		<div className='search'>
 			<input
 				type='text'
 				placeholder='Что ищем?'
 				className='search__input'
-				onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
+				onChange={onChangeInput}
 			/>
-			<div className='search__icon' onClick={redirectPage}>
-				Найти
-			</div>
+			<div className='search__icon'>Найти</div>
 		</div>
 	)
 }
-
-export default Search

@@ -14,8 +14,12 @@
 		cursor: pointer;
 		padding: 15px 30px;
 		transition: 0.1s linear;
+		&--active {
+			background-color: #00000062;
+			color: #fff;
+		}
 		&:hover {
-			background-color: #000;
+			background-color: #000000a1;
 			color: #fff;
 		}
 	}
