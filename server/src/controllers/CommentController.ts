@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid'
 export const getComments = (req: Request, res: Response) => {
 	try {
 		pool.query(
-			'SELECT * FROM comments LEFT JOIN users ON comments.video_id = $1',
+			'SELECT * FROM comments LEFT JOIN users ON comments.user_id = users.id WHERE comments.video_id = $1',
 			[req.query.look],
 			(error: Error, results: QueryResult) => {
 				if (error) throw error
@@ -21,7 +21,7 @@ export const getComments = (req: Request, res: Response) => {
 
 export const addComment = (req: Request, res: Response) => {
 	try {
-		const token = (req.headers.authorization || '').replace(/Bearer\s?/, '')
+		const token = (req.body.headers.Authorization || '').replace(/Bearer\s?/, '')
 
 		jwt.verify(token, `${process.env.JWT_SECRET}`, (err: jwt.VerifyErrors | null, decoded: any) => {
 			if (err) {

@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import { RootState, useAppDispatch } from '../redux/store'
 import { setData, setIsAuth, setUserImgUrl } from '../redux/slices/authSlice'
 import Cookies from 'js-cookie'
+import { customAxiosFile } from '../utils/axiosFile'
 
 export interface FormData {
 	name: string
@@ -33,7 +34,7 @@ const Registration = ({}) => {
 			const formData = new FormData()
 			formData.append('image', event.target.files[0])
 
-			await customAxios(`/userimage`, 'post', formData).then((data: { url: string }) => {
+			await customAxiosFile(`/userimage`, 'post', formData).then((data: { url: string }) => {
 				try {
 					dispatch(setUserImgUrl(`${data.url}`))
 					data && alert('Аватарка была успешно изменена')
@@ -49,7 +50,7 @@ const Registration = ({}) => {
 
 	const deleteImg = async () => {
 		try {
-			customAxios(`/userimage/${userImgUrl}`, 'delete')
+			customAxiosFile(`/userimage/${userImgUrl}`, 'delete')
 			if (inputFileRef.current) {
 				inputFileRef.current.value = ''
 			}

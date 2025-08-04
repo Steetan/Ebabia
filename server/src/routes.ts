@@ -25,6 +25,7 @@ import {
 } from './middlewares/validations.js'
 import checkAuth from './utils/checkAuth.js'
 import { addNews, getAllNews } from './controllers/NewsController.js'
+import { addComment, getComments } from './controllers/CommentController.js'
 
 const router = Router()
 
@@ -67,15 +68,18 @@ const uploadImage = multer({ storage: storagePreviews })
 const uploadNewsImage = multer({ storage: storageNewsPreviews })
 const uploadUserIcons = multer({ storage: storageUserIcons })
 
-router.get('/prevvideo', getPreviews)
 router.get('/news', getAllNews)
-router.post('/news', addNews)
 
+router.get('/comments', getComments)
+
+router.get('/prevvideo', getPreviews)
 router.get('/video', getVideoById)
 router.get('/quest', getVideoBySearch)
 router.get('/meinfo', getMeInfo)
 router.get('/auth/login', loginUser)
 
+router.post('/news', addNews)
+router.post('/comments', addComment)
 router.post('/auth/reg', registerValidator, createUser)
 router.post('/addvideo', upload.single('video'), addVideo)
 
