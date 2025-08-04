@@ -15,7 +15,7 @@ import { generateJWT } from '../utils/generateJWT.js';
 import fs from 'fs';
 export const getMeInfo = (req, res) => {
     try {
-        const token = String(req.query.token) || '';
+        const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
         jwt.verify(token, `${process.env.JWT_SECRET}`, (err, decoded) => {
             if (err) {
                 res.json({ error: 'Неверный токен' });
@@ -57,7 +57,7 @@ export const loginUser = (req, res) => {
 export const deleteUser = (req, res) => {
     try {
         const filePath = `uploads/userIcons/${req.body.url}`;
-        const token = String(req.query.token) || '';
+        const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
         jwt.verify(token, `${process.env.JWT_SECRET}`, (err, decoded) => {
             if (err) {
                 res.json({ error: 'Неверный токен' });
@@ -125,7 +125,7 @@ export const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, functi
         if (!errors.isEmpty()) {
             return res.status(403).json({ error: errors.array() });
         }
-        const token = String(req.query.token) || '';
+        const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
         jwt.verify(token, `${process.env.JWT_SECRET}`, (err, decoded) => {
             if (err) {
                 res.status(401).json({ error: 'Неверный токен' });
@@ -153,7 +153,7 @@ export const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, functi
 });
 export const updateUserImg = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const token = String(req.query.token) || '';
+        const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
         jwt.verify(token, `${process.env.JWT_SECRET}`, (err, decoded) => {
             if (err) {
                 res.status(401).json({ error: 'Неверный токен' });
@@ -179,10 +179,7 @@ export const updatePasswordUser = (req, res) => __awaiter(void 0, void 0, void 0
         if (!errors.isEmpty()) {
             return res.status(403).json({ error: errors.array() });
         }
-        const token = String(req.query.token) || '';
-        // const password = req.body.password
-        // const salt = await bcrypt.genSalt(10)
-        // const passwordHash = await bcrypt.hash(password, salt)
+        const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
         jwt.verify(token, `${process.env.JWT_SECRET}`, (err, decoded) => {
             if (err) {
                 res.status(401).json({ error: 'Неверный токен' });
@@ -205,7 +202,7 @@ export const updatePasswordUser = (req, res) => __awaiter(void 0, void 0, void 0
 export const deleteUserImg = (req, res) => {
     try {
         const filePath = `uploads/userIcons/${req.params.filename}`;
-        const token = String(req.query.token) || '';
+        const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
         jwt.verify(token, `${process.env.JWT_SECRET}`, (err, decoded) => {
             if (err) {
                 res.status(401).json({ error: 'Неверный токен' });

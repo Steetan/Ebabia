@@ -1,6 +1,6 @@
 import React from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
-import { IVideo } from '../../pages/News/News'
+import { IVideo } from '../../pages/Video/Video'
 
 const VideoPrev: React.FC<IVideo> = ({ id, preview, title, link, description }) => {
 	const navigate = useNavigate()

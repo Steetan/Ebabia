@@ -3,23 +3,14 @@ import Cookies from 'js-cookie'
 
 type ActionType = 'get' | 'post' | 'put' | 'patch' | 'delete'
 
-export const customAxios = async (url: string, action: ActionType, body?: {}) => {
+export const customAxiosFile = async (url: string, action: ActionType, body?: {}) => {
 	const cookie = Cookies.get('token')
 	const endpoint = `${process.env.REACT_APP_SERVER_URL}${url}` // Исправлено
 
 	try {
-		const response: AxiosResponse = await axios[action](
-			endpoint,
-			{
-				...body,
-				headers: {
-					Authorization: `Bearer ${cookie}`, // Токен передается в заголовках
-				},
-			},
-			{
-				withCredentials: true,
-			},
-		)
+		const response: AxiosResponse = await axios[action](endpoint, body, {
+			withCredentials: true,
+		})
 
 		return response.data
 	} catch (error) {

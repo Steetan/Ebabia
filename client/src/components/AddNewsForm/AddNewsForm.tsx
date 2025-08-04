@@ -6,13 +6,14 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import Cookies from 'js-cookie'
+import { customAxiosFile } from '../../utils/axiosFile'
 
 export interface FormData {
 	title: string
 	description: string
 }
 
-const AddVideo: React.FC = () => {
+const AddNewsForm: React.FC = () => {
 	const { isAuth } = useSelector((state: RootState) => state.authSlice)
 	const [videoUrl, setVideoUrl] = React.useState<string | null>(null)
 	const [videoFile, setVideoFile] = React.useState<File | null>(null)
@@ -27,28 +28,15 @@ const AddVideo: React.FC = () => {
 	} = useForm<FormData>()
 
 	const onSubmit: SubmitHandler<FormData> = async (data) => {
-		if (videoFile) {
-			const formData = new FormData()
-			formData.append('title', data.title)
-			formData.append('description', data.description)
-			formData.append('video', videoFile)
-			formData.append('imageUrl', imgUrl)
+		const formData = new FormData()
+		formData.append('description', data.description)
+		formData.append('imageUrl', imgUrl)
 
-			try {
-				await customAxios(`/addvideo?token=${Cookies.get('token')}`, 'post', formData).then(() => {
-					navigate('/')
-				})
-			} catch (error) {
-				console.error('Ошибка при регистрации', error)
-			}
-		} else {
-			alert('Пожалуйста, загрузите видео')
+		try {
+			await customAxios(`/news`, 'post', { description: data.description, imgUrl }).then(() => {})
+		} catch (error) {
+			console.error('Ошибка при добавлении', error)
 		}
-	}
-
-	const removeVideo = () => {
-		setVideoUrl(null)
-		setVideoFile(null)
 	}
 
 	const handleFileChange = async (event: any) => {
@@ -56,7 +44,7 @@ const AddVideo: React.FC = () => {
 			const formData = new FormData()
 			formData.append('image', event.target.files[0])
 
-			customAxios(`/prev`, 'post', formData).then((data) => {
+			customAxiosFile(`/newsprev`, 'post', formData).then((data) => {
 				setImgUrl(data?.url)
 			})
 		} catch (error) {
@@ -66,7 +54,7 @@ const AddVideo: React.FC = () => {
 
 	const deleteImg = () => {
 		try {
-			customAxios(`/prev/${imgUrl}`, 'delete')
+			customAxiosFile(`/newsprev/${imgUrl}`, 'delete')
 			if (inputFileRef.current) {
 				inputFileRef.current.value = ''
 			}
@@ -81,60 +69,30 @@ const AddVideo: React.FC = () => {
 	return (
 		<div className='form-block-wrapper'>
 			<div className='form-block'>
-				<h3 className='form-block__title'>Добавить видео</h3>
+				<h3 className='form-block__title'>Добавить новость</h3>
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<div className='form-block__inputs'>
 						<TextField
-							error={!!errors.title}
-							id='outlined-basic'
-							label='Название'
-							variant='outlined'
-							{...register('title', { required: 'Укажите название' })}
-						/>
-						{errors.title && <p style={{ color: 'red' }}>{errors.title.message}</p>}
-						<TextField
 							id='outlined-basic'
 							label='Описание'
-							type='text'
+							multiline
+							rows={4}
+							maxRows={4}
 							variant='outlined'
 							{...register('description')}
 						/>
-						{!videoUrl ? (
-							<label htmlFor='file-upload' className='custom-file-upload'>
-								Загрузить видео
-							</label>
-						) : (
-							<label onClick={removeVideo} className='custom-file-upload'>
-								Выбрать другое видео
-							</label>
-						)}
 						{!imgUrl && (
-							<label htmlFor='file-upload-image' className='custom-file-upload'>
+							<label htmlFor='file-upload-image-news' className='custom-file-upload'>
 								Загрузить фото
 							</label>
 						)}
 						<input
-							id='file-upload-image'
+							id='file-upload-image-news'
 							ref={inputFileRef}
 							type='file'
 							accept='image/*'
 							style={{ display: 'none' }}
 							onChange={handleFileChange}
-						/>
-						<input
-							id='file-upload'
-							type='file'
-							name='image'
-							accept='video/*'
-							onChange={(e) => {
-								const file = e.target.files ? e.target.files[0] : null
-								if (file) {
-									const url = URL.createObjectURL(file)
-									setVideoUrl(url)
-									setVideoFile(file) // Сохраняем файл для отправки на сервер
-								}
-							}}
-							style={{ display: 'none' }}
 						/>
 
 						{imgUrl && (
@@ -144,7 +102,7 @@ const AddVideo: React.FC = () => {
 						)}
 						<img
 							className='form-block__img-upload'
-							src={`${process.env.REACT_APP_SERVER_URL}/uploads/previews/${imgUrl}`}
+							src={`${process.env.REACT_APP_SERVER_URL}/uploads/news/${imgUrl}`}
 							alt=''
 						/>
 					</div>
@@ -155,18 +113,8 @@ const AddVideo: React.FC = () => {
 					</div>
 				</form>
 			</div>
-
-			{videoUrl && (
-				<div className='video-preview'>
-					<h4>Предпросмотр видео:</h4>
-					<video controls width='600'>
-						<source src={videoUrl} type='video/mp4' />
-						Ваш браузер не поддерживает видео.
-					</video>
-				</div>
-			)}
 		</div>
 	)
 }
 
-export default AddVideo
+export default AddNewsForm

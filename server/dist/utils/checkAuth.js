@@ -1,5 +1,5 @@
 export default (req, res, next) => {
-    const token = String(req.query.token) || '';
+    const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
     if (token) {
         next();
     }

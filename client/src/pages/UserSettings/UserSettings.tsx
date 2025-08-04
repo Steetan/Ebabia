@@ -40,14 +40,12 @@ const UserSettings = ({}) => {
 	const onDelete = () => {
 		if (window.confirm('Вы действительно хотите удалить аккаунт?')) {
 			try {
-				customAxios(`/user?token=${Cookies.get('token')}`, 'delete', { url: userImgUrl }).then(
-					() => {
-						Cookies.remove('token')
-						dispatch(setData({}))
-						dispatch(setIsAuth(false))
-						navigate('/')
-					},
-				)
+				customAxios(`/user`, 'delete', { url: userImgUrl }).then(() => {
+					Cookies.remove('token')
+					dispatch(setData({}))
+					dispatch(setIsAuth(false))
+					navigate('/')
+				})
 			} catch (error) {
 				console.error('Ошибка при попытке авторизации', error)
 			}
@@ -60,10 +58,9 @@ const UserSettings = ({}) => {
 				values.userPassword?.length < 6 &&
 				alert('Пароль должен содержать минимум 6 символов')
 			if (values.userPassword && values.userPassword === values.userPasswordRepeat) {
-				const data = await customAxios(`/auth/updpass?token=${Cookies.get('token')}`, 'patch', {
+				const data = await customAxios(`/auth/updpass`, 'patch', {
 					password: values.userPassword,
 				})
-				console.log(data)
 				data && alert('Пароль был успешно изменен')
 			} else {
 				alert('Пароли не совпадают')
@@ -80,10 +77,9 @@ const UserSettings = ({}) => {
 			formData.append('image', event.target.files[0])
 
 			await customAxios(`/userimage`, 'post', formData).then((data) => {
-				console.log(data)
 				try {
 					dispatch(setUserImgUrl(`${data.url}`))
-					customAxios(`/auth/updimg?token=${Cookies.get('token')}`, 'patch', {
+					customAxios(`/auth/updimg`, 'patch', {
 						img: data.url,
 					}).then(({ data }) => {
 						data && alert('Аватарка была успешно изменена')
@@ -100,7 +96,7 @@ const UserSettings = ({}) => {
 
 	const deleteImg = async () => {
 		try {
-			await customAxios(`/upload/user/delete/${userImgUrl}?token=${Cookies.get('token')}`, 'delete')
+			await customAxios(`/upload/user/delete/${userImgUrl}`, 'delete')
 			if (inputFileRef.current) {
 				inputFileRef.current.value = ''
 			}

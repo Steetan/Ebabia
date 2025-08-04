@@ -1,8 +1,8 @@
 import React from 'react'
-import { IVideo } from '../News/News'
 import VideoPrev from '../../components/VideoPrev/VideoPrev'
 import { customAxios } from '../../utils/axios'
 import { useSearchParams } from 'react-router-dom'
+import { IVideo } from '../Video/Video'
 
 const Quest: React.FC = ({}) => {
 	const [fetchDataSearch, setFetchDataSearch] = React.useState([])

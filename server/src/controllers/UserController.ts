@@ -9,7 +9,7 @@ import fs from 'fs'
 
 export const getMeInfo = (req: Request, res: Response) => {
 	try {
-		const token = String(req.query.token) || ''
+		const token = (req.headers.authorization || '').replace(/Bearer\s?/, '')
 
 		jwt.verify(token, `${process.env.JWT_SECRET}`, (err: jwt.VerifyErrors | null, decoded: any) => {
 			if (err) {
@@ -59,7 +59,7 @@ export const loginUser = (req: Request, res: Response) => {
 export const deleteUser = (req: Request, res: Response) => {
 	try {
 		const filePath = `uploads/userIcons/${req.body.url}`
-		const token = String(req.query.token) || ''
+		const token = (req.headers.authorization || '').replace(/Bearer\s?/, '')
 		jwt.verify(token, `${process.env.JWT_SECRET}`, (err: jwt.VerifyErrors | null, decoded: any) => {
 			if (err) {
 				res.json({ error: 'Неверный токен' })
@@ -137,7 +137,7 @@ export const updateUser = async (req: Request, res: Response) => {
 			return res.status(403).json({ error: errors.array() })
 		}
 
-		const token = String(req.query.token) || ''
+		const token = (req.headers.authorization || '').replace(/Bearer\s?/, '')
 
 		jwt.verify(token, `${process.env.JWT_SECRET}`, (err: jwt.VerifyErrors | null, decoded: any) => {
 			if (err) {
@@ -173,7 +173,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
 export const updateUserImg = async (req: Request, res: Response) => {
 	try {
-		const token = String(req.query.token) || ''
+		const token = (req.headers.authorization || '').replace(/Bearer\s?/, '')
 
 		jwt.verify(token, `${process.env.JWT_SECRET}`, (err: jwt.VerifyErrors | null, decoded: any) => {
 			if (err) {
@@ -203,11 +203,7 @@ export const updatePasswordUser = async (req: Request, res: Response) => {
 			return res.status(403).json({ error: errors.array() })
 		}
 
-		const token = String(req.query.token) || ''
-
-		// const password = req.body.password
-		// const salt = await bcrypt.genSalt(10)
-		// const passwordHash = await bcrypt.hash(password, salt)
+		const token = (req.headers.authorization || '').replace(/Bearer\s?/, '')
 
 		jwt.verify(token, `${process.env.JWT_SECRET}`, (err: jwt.VerifyErrors | null, decoded: any) => {
 			if (err) {
@@ -234,7 +230,7 @@ export const deleteUserImg = (req: Request, res: Response) => {
 	try {
 		const filePath = `uploads/userIcons/${req.params.filename}`
 
-		const token = String(req.query.token) || ''
+		const token = (req.headers.authorization || '').replace(/Bearer\s?/, '')
 
 		jwt.verify(token, `${process.env.JWT_SECRET}`, (err: jwt.VerifyErrors | null, decoded: any) => {
 			if (err) {

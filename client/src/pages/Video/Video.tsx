@@ -12,7 +12,7 @@ export interface IVideo {
 }
 
 const Video: React.FC = () => {
-	const { data, isLoading, error } = useVideos('')
+	const { data, isLoading, error } = useVideos('/prevvideo')
 	const [fetchData, setFetchData] = useState<IVideo[]>([])
 
 	useEffect(() => {
@@ -35,9 +35,11 @@ const Video: React.FC = () => {
 		<div className='video'>
 			<ContentTop title='Все видео' setFetchData={setFetchData} />
 			<div className='video-block'>
-				{fetchData.map((item: IVideo) => (
-					<VideoPrev key={item.id} {...item} />
-				))}
+				{fetchData.length ? (
+					fetchData.map((item: IVideo) => <VideoPrev key={item.id} {...item} />)
+				) : (
+					<h1>Пока нет видео</h1>
+				)}
 			</div>
 		</div>
 	)

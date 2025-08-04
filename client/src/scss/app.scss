@@ -8,6 +8,7 @@
 @import '../components/Aside/aside.scss';
 @import '../components/PopupMenu/popupMenu.scss';
 @import '../pages/FullVideo/fullVideo.scss';
+@import '../pages/AdminPanel/adminPanel.scss';
 @import '../pages/UserSettings/userSettings.scss';
 @import '../pages/News/news.scss';
 @import './button.scss';
@@ -38,6 +39,15 @@ h4,
 h5,
 h6,
 p {
+	padding: 0;
+	margin: 0;
+}
+
+ul,
+ol,
+li {
+	text-decoration: none;
+	list-style: none;
 	padding: 0;
 	margin: 0;
 }
@@ -80,7 +90,7 @@ body {
 		width: 100%;
 		display: flex;
 		align-items: flex-start;
-		justify-content: space-between;
+		justify-content: center;
 		gap: 20px;
 	}
 	@media (max-width: 570px) {

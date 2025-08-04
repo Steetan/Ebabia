@@ -17,12 +17,11 @@ export const UpdateUserForm = ({}) => {
 
 	React.useEffect(() => {
 		try {
-			customAxios(`/meinfo?token=${Cookies.get('token')}`, 'get').then((data: any) => {
+			customAxios(`/meinfo`, 'get').then((data: any) => {
 				setValue('name', data.name)
 				setValue('fname', data.fname)
 				setValue('email', data.email)
 				setLoading(false)
-				console.log(data)
 			})
 		} catch (error) {
 			console.log(error)
@@ -31,7 +30,7 @@ export const UpdateUserForm = ({}) => {
 
 	const onSubmit = async (values: UserData) => {
 		try {
-			const data = await customAxios(`/auth/update?token=${Cookies.get('token')}`, 'patch', {
+			const data = await customAxios(`/auth/update`, 'patch', {
 				...values,
 			})
 
@@ -51,15 +50,7 @@ export const UpdateUserForm = ({}) => {
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<div className='form-block'>
-				<h3 className='form-block__title'>Обновление данных</h3>
-				<TextField
-					id='outlined-basic'
-					label='Фамилия'
-					className='form-block__input form-block__input--update'
-					variant='outlined'
-					{...register('fname', { required: 'Укажите фамилию' })}
-				/>
-				{errors.fname && <p style={{ color: 'red' }}>{errors.fname.message}</p>}
+				<h3 className='form-block__title'>Поменять данные</h3>
 				<TextField
 					id='outlined-basic'
 					label='Имя'
@@ -68,6 +59,14 @@ export const UpdateUserForm = ({}) => {
 					{...register('name', { required: 'Укажите имя' })}
 				/>
 				{errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
+				<TextField
+					id='outlined-basic'
+					label='Фамилия'
+					className='form-block__input form-block__input--update'
+					variant='outlined'
+					{...register('fname', { required: 'Укажите фамилию' })}
+				/>
+				{errors.fname && <p style={{ color: 'red' }}>{errors.fname.message}</p>}
 				<TextField
 					id='outlined-basic'
 					label='Email'

@@ -12,7 +12,14 @@ const Layout = () => {
 			<Header />
 			<div className='wrapper'>
 				<div className='container'>
-					<div className='wrapper__inner'>
+					<div
+						className='wrapper__inner'
+						style={
+							location.pathname === '/auth/login' || location.pathname === '/auth/reg'
+								? { justifyContent: 'center' }
+								: {}
+						}
+					>
 						<Aside />
 						<div className={location.pathname === '/quest' ? 'content content--quest' : 'content'}>
 							<Outlet />

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 
 export default (req: Request, res: Response, next: NextFunction) => {
-	const token = String(req.query.token) || ''
+	const token = (req.headers.authorization || '').replace(/Bearer\s?/, '')
 	if (token) {
 		next()
 	} else {

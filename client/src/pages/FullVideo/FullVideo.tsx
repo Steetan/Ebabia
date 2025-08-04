@@ -49,13 +49,13 @@ const FullVideo: React.FC = () => {
 								<TextField
 									placeholder='Описание '
 									multiline
-									rows={4}
+									rows={2}
 									maxRows={8}
 									{...register('description')}
 								/>
 								<div className='form-block__btns'>
 									<button type='submit' className='button button--footer button--reviews'>
-										Добавить отзыв
+										Добавить комментарий
 									</button>
 								</div>
 							</div>

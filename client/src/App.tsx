@@ -6,11 +6,11 @@ import Registration from './pages/Registration'
 import NotFound from './pages/NotFound/NotFound'
 import Video from './pages/Video/Video'
 import Quest from './pages/Quest/Quest'
-import AddVideo from './pages/AddVideo/AddVideo'
 import UserSettings from './pages/UserSettings/UserSettings'
 import { Route, Routes } from 'react-router-dom'
 import FullVideo from './pages/FullVideo/FullVideo'
 import News from './pages/News/News'
+import AdminPanel from './pages/AdminPanel/AdminPanel'
 
 const App = () => {
 	return (
@@ -20,7 +20,7 @@ const App = () => {
 				<Route path='quest' element={<Quest />} />
 				<Route path='video' element={<Video />} />
 				<Route path='fullvideo' element={<FullVideo />} />
-				<Route path='addvideo' element={<AddVideo />} />
+				<Route path='adminpanel' element={<AdminPanel />} />
 				<Route path='auth/login' element={<Login />} />
 				<Route path='auth/reg' element={<Registration />} />
 				<Route path='userset' element={<UserSettings />} />

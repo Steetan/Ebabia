@@ -3,7 +3,7 @@ import debounce from 'lodash.debounce'
 import { RootState, useAppDispatch } from '../../redux/store'
 import { useSelector } from 'react-redux'
 import { customAxios } from '../../utils/axios'
-import { IVideo } from '../../pages/News/News'
+import { IVideo } from '../../pages/Video/Video'
 
 export const Search: React.FC<{
 	setFetchData: React.Dispatch<React.SetStateAction<IVideo[]>>
@@ -40,7 +40,6 @@ export const Search: React.FC<{
 				className='search__input'
 				onChange={onChangeInput}
 			/>
-			<div className='search__icon'>Найти</div>
 		</div>
 	)
 }
