@@ -11,7 +11,7 @@ const NewsBlock: React.FC<{
 	const onDeleteNews = () => {
 		if (window.confirm('Вы действительно хотите удалить пост?')) {
 			try {
-				customAxios(`/video?id=${id}&prevname=${img_link}`, 'delete').then((data) => {
+				customAxios(`/news?id=${id}&prevname=${img_link}`, 'delete').then((data) => {
 					alert('Пост был успешно удален')
 					onFetchData()
 				})

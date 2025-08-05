@@ -7,7 +7,7 @@ const Chat: React.FC<{ socket: any }> = ({ socket }) => {
 	const [inputText, setInputText] = React.useState('')
 	const { userImgUrl, dataUser } = useSelector((state: RootState) => state.authSlice)
 	const messagesEndRef = React.useRef<HTMLDivElement>(null)
-	const [typingCurrentUser, setTypingCurrentUser] = React.useState('')
+	const [typingCurrentUser, setTypingCurrentUser] = React.useState<string | null>(null)
 
 	const [messageArr, setMessageArr] = React.useState<
 		{
@@ -67,7 +67,7 @@ const Chat: React.FC<{ socket: any }> = ({ socket }) => {
 					clearTimeout(typingTimeout)
 				}
 				typingTimeout = setTimeout(() => {
-					setTypingCurrentUser('')
+					setTypingCurrentUser(null)
 				}, 1000)
 			}
 		}
@@ -80,9 +80,9 @@ const Chat: React.FC<{ socket: any }> = ({ socket }) => {
 				clearTimeout(typingTimeout)
 			}
 		}
-	}, [socket])
+	}, [socket, dataUser.id])
 
-	const changeMessage = (e: any) => {
+	const changeMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setInputText(e.target.value)
 		socket.emit('typing', {
 			typingUser: { userName: dataUser.name, userId: dataUser.id },
