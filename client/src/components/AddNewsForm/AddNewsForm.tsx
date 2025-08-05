@@ -15,8 +15,6 @@ export interface FormData {
 
 const AddNewsForm: React.FC = () => {
 	const { isAuth } = useSelector((state: RootState) => state.authSlice)
-	const [videoUrl, setVideoUrl] = React.useState<string | null>(null)
-	const [videoFile, setVideoFile] = React.useState<File | null>(null)
 	const [imgUrl, setImgUrl] = React.useState<any>(null)
 	const navigate = useNavigate()
 

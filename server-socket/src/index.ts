@@ -100,14 +100,15 @@ socketIO.on('connection', (socket) => {
 			sender_name: string
 			sender_fname: string
 			sender_img: string
+			data: any
 		}) => {
 			const token = (data.token || '').replace(/Bearer\s?/, '')
 			jwt.verify(token, `@dkflbckfd2003`, (err: jwt.VerifyErrors | null, decoded: any) => {
 				if (decoded.id) {
 					const messageId = uuid()
 					pool.query(
-						'INSERT INTO messages (id, message, user_id) VALUES ($1, $2, $3)',
-						[messageId, data.message, decoded.id],
+						'INSERT INTO messages (id, message, user_id, data) VALUES ($1, $2, $3, $4)',
+						[messageId, data.message, decoded.id, data.data],
 						(error: Error, results: QueryResult) => {
 							const newObj = {
 								message_id: messageId,
@@ -116,6 +117,7 @@ socketIO.on('connection', (socket) => {
 								sender_name: data.sender_name,
 								sender_fname: data.sender_fname,
 								sender_img: data.sender_img,
+								data: data.data,
 							}
 							socketIO.emit('newMessage', newObj)
 						},

@@ -2,12 +2,15 @@ import React from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { IVideo } from '../../pages/Video/Video'
 import { customAxios } from '../../utils/axios'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../redux/store'
 
 const VideoPrev: React.FC<any> = ({ id, preview, title, link }) => {
 	const navigate = useNavigate()
 	const location = useLocation()
 	const [searchParams, setSearchParams] = useSearchParams()
 	const searchTerm = searchParams.get('look')
+	const { dataUser } = useSelector((state: RootState) => state.authSlice)
 
 	const redirectPage = () => {
 		navigate(`/fullvideo?look=${id}`)
@@ -42,17 +45,18 @@ const VideoPrev: React.FC<any> = ({ id, preview, title, link }) => {
 						? 'video-prev--desc'
 						: ''
 				}`}
-				onClick={redirectPage}
 			>
-				<div className='video-prev__img'>
+				<div className='video-prev__img' onClick={redirectPage}>
 					<img
 						src={`${process.env.REACT_APP_SERVER_URL}/uploads/previews/${preview}`}
 						alt={title}
 					/>
 				</div>
-				<div className='video-prev__title'>{title}</div>
+				<div className='video-prev__bottom'>
+					<div className='video-prev__title'>{title}</div>
+					{dataUser.is_admin && <button onClick={onDeleteVideo}>Удалить</button>}
+				</div>
 			</div>
-			<button onClick={onDeleteVideo}>Удалить</button>
 		</div>
 	)
 }

@@ -218,15 +218,16 @@
 }
 
 .btn-avatar {
+	border: 3px solid #000;
 	background-color: #fff;
 	border-radius: 50%;
 	overflow: hidden;
 	width: 50px;
 	height: 50px;
+	cursor: pointer;
 	img {
 		object-fit: cover;
 		width: 100%;
 		height: 100%;
-		// height: auto;
 	}
 }

@@ -12,7 +12,6 @@ interface IPopupMenu {
 
 export const PopupMenu: React.FC<IPopupMenu> = ({ setIsVisiblePopup }) => {
 	const [isVisibleMenu, setIsVisibleMenu] = React.useState(false)
-	const [nickname, setNickname] = React.useState('')
 	const { userImgUrl, isDarkTheme, dataUser, isAuth } = useSelector(
 		(state: RootState) => state.authSlice,
 	)
@@ -138,9 +137,11 @@ export const PopupMenu: React.FC<IPopupMenu> = ({ setIsVisiblePopup }) => {
 					<li className='popup-menu-item' onClick={() => navigate('/userset')}>
 						Мой профиль
 					</li>
-					<li className='popup-menu-item' onClick={() => navigate('/adminpanel')}>
-						Админ панель
-					</li>
+					{dataUser.is_admin && (
+						<li className='popup-menu-item' onClick={() => navigate('/adminpanel')}>
+							Админ панель
+						</li>
+					)}
 					<li className='popup-menu-item' onClick={onClickItemLogout}>
 						Выйти
 					</li>

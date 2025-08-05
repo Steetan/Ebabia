@@ -37,7 +37,6 @@ const Registration = ({}) => {
 			await customAxiosFile(`/userimage`, 'post', formData).then((data: { url: string }) => {
 				try {
 					dispatch(setUserImgUrl(`${data.url}`))
-					data && alert('Аватарка была успешно изменена')
 				} catch (error) {
 					console.log(error)
 					alert('Не удалось обновить аватарку')
@@ -136,6 +135,7 @@ const Registration = ({}) => {
 							id='file-upload'
 							ref={inputFileRef}
 							type='file'
+							accept='image/*'
 							style={{ display: 'none' }}
 							onChange={handleFileChange}
 						/>

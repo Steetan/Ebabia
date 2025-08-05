@@ -10,6 +10,15 @@ import AddVideoForm from '../../components/AddVideoForm/AddVideoForm'
 import AddNewsForm from '../../components/AddNewsForm/AddNewsForm'
 
 const AdminPanel: React.FC = () => {
+	const { dataUser } = useSelector((state: RootState) => state.authSlice)
+	const navigation = useNavigate()
+
+	React.useEffect(() => {
+		if (!dataUser.is_admin) {
+			navigation('/')
+		}
+	}, [])
+
 	return (
 		<div className='adminpanel'>
 			<AddVideoForm />

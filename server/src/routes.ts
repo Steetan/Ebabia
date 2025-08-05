@@ -27,6 +27,7 @@ import {
 import checkAuth from './utils/checkAuth.js'
 import { addNews, deleteNewsById, getAllNews } from './controllers/NewsController.js'
 import { addComment, getComments } from './controllers/CommentController.js'
+import { v4 as uuidv4 } from 'uuid'
 
 const router = Router()
 
@@ -35,15 +36,18 @@ const storageVideos = multer.diskStorage({
 		cb(null, 'uploads/videos')
 	},
 	filename: (_, file, cb) => {
-		cb(null, file.originalname)
+		const ext = path.extname(file.originalname) // Получите расширение файла
+		cb(null, `${uuidv4()}${ext}`) // Используйте UUID и добавьте расширение
 	},
 })
+
 const storagePreviews = multer.diskStorage({
 	destination: (_, __, cb) => {
 		cb(null, 'uploads/previews')
 	},
 	filename: (_, file, cb) => {
-		cb(null, file.originalname)
+		const ext = path.extname(file.originalname)
+		cb(null, `${uuidv4()}${ext}`)
 	},
 })
 
@@ -52,15 +56,18 @@ const storageNewsPreviews = multer.diskStorage({
 		cb(null, 'uploads/news')
 	},
 	filename: (_, file, cb) => {
-		cb(null, file.originalname)
+		const ext = path.extname(file.originalname)
+		cb(null, `${uuidv4()}${ext}`)
 	},
 })
+
 const storageUserIcons = multer.diskStorage({
 	destination: (_, __, cb) => {
 		cb(null, 'uploads/userIcons')
 	},
 	filename: (_, file, cb) => {
-		cb(null, file.originalname)
+		const ext = path.extname(file.originalname)
+		cb(null, `${uuidv4()}${ext}`)
 	},
 })
 

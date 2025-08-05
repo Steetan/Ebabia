@@ -13,6 +13,7 @@
 	&__video {
 		max-width: 600px;
 		height: auto;
+		max-height: 600px;
 	}
 	&__comments {
 		margin-top: 20px;
@@ -30,6 +31,7 @@
 			margin-bottom: 10px;
 		}
 		&-img {
+			object-fit: cover;
 			display: block;
 			width: 50px;
 			height: 50px;

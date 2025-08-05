@@ -12,5 +12,5 @@ export const translateOneDate = (data: any) => {
 		minute: '2-digit',
 	})
 
-	return `${formattedDate}, ${formattedTime}`
+	return `${formattedDate} ${formattedTime}`
 }

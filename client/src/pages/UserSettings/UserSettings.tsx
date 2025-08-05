@@ -81,9 +81,6 @@ const UserSettings = ({}) => {
 					dispatch(setUserImgUrl(`${data.url}`))
 					customAxios(`/auth/updimg`, 'patch', {
 						img: data.url,
-					}).then((data2) => {
-						data2 && alert('Аватарка была успешно изменена')
-						console.log(data2)
 					})
 				} catch (error) {
 					console.log(error)
@@ -171,6 +168,7 @@ const UserSettings = ({}) => {
 						id='file-upload'
 						ref={inputFileRef}
 						type='file'
+						accept='image/*'
 						style={{ display: 'none' }}
 						onChange={handleFileChange}
 					/>
