@@ -3,7 +3,7 @@ import { RootState } from '../store'
 import Cookies from 'js-cookie'
 
 type TypeAuthState = {
-	data: any
+	dataUser: any
 	userImgUrl: string
 	isAdmin: boolean
 	isAuth: boolean
@@ -11,7 +11,7 @@ type TypeAuthState = {
 }
 
 const initialState: TypeAuthState = {
-	data: {},
+	dataUser: {},
 	userImgUrl: '',
 	isAdmin: false,
 	isAuth: false,
@@ -23,11 +23,11 @@ const authSlice = createSlice({
 	initialState,
 	reducers: {
 		logout: (state) => {
-			state.data = {}
+			state.dataUser = {}
 			Cookies.remove('token')
 		},
 		setData: (state, action) => {
-			state.data = action.payload
+			state.dataUser = action.payload
 		},
 		setUserImgUrl: (state, action) => {
 			state.userImgUrl = action.payload
@@ -44,9 +44,9 @@ const authSlice = createSlice({
 	},
 })
 
-export const selectIsAuth = (state: RootState) => state.authSlice.data
+export const selectIsAuth = (state: RootState) => state.authSlice.dataUser
 
-export const selectIsAuthAdmin = (state: RootState) => Boolean(state.authSlice.data)
+export const selectIsAuthAdmin = (state: RootState) => Boolean(state.authSlice.dataUser)
 
 export default authSlice.reducer
 

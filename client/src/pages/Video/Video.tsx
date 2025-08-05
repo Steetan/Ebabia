@@ -15,12 +15,16 @@ const Video: React.FC = () => {
 	const { data, isLoading, error } = useVideos('/prevvideo')
 	const [fetchData, setFetchData] = useState<IVideo[]>([])
 
-	useEffect(() => {
+	const fetchVideos = () => {
 		if (Array.isArray(data)) {
 			setFetchData(data)
 		} else {
 			setFetchData([])
 		}
+	}
+
+	useEffect(() => {
+		fetchVideos()
 	}, [data])
 
 	if (isLoading) {
@@ -36,7 +40,9 @@ const Video: React.FC = () => {
 			<ContentTop title='Все видео' setFetchData={setFetchData} />
 			<div className='video-block'>
 				{fetchData.length ? (
-					fetchData.map((item: IVideo) => <VideoPrev key={item.id} {...item} />)
+					fetchData.map((item: IVideo) => (
+						<VideoPrev key={item.id} {...item} setFetchData={setFetchData} fetchData={fetchData} />
+					))
 				) : (
 					<h1>Пока нет видео</h1>
 				)}

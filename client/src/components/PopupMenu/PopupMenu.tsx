@@ -13,7 +13,7 @@ interface IPopupMenu {
 export const PopupMenu: React.FC<IPopupMenu> = ({ setIsVisiblePopup }) => {
 	const [isVisibleMenu, setIsVisibleMenu] = React.useState(false)
 	const [nickname, setNickname] = React.useState('')
-	const { userImgUrl, isDarkTheme, data, isAuth } = useSelector(
+	const { userImgUrl, isDarkTheme, dataUser, isAuth } = useSelector(
 		(state: RootState) => state.authSlice,
 	)
 	const menuRef = React.useRef<HTMLDivElement>(null)
@@ -131,7 +131,7 @@ export const PopupMenu: React.FC<IPopupMenu> = ({ setIsVisiblePopup }) => {
 				{isAuth && (
 					<p className='popup-menu-info-user'>
 						Вы вошли как <br />
-						<b className={isDarkTheme ? 'dark-theme-font' : ''}>{data.name}</b>
+						<b className={isDarkTheme ? 'dark-theme-font' : ''}>{dataUser.name}</b>
 					</p>
 				)}
 				<ul className='popup-menu-list'>

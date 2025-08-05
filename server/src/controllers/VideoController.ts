@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 import { QueryResult } from 'pg'
 import { pool } from '../db.js'
 import { v4 as uuidv4 } from 'uuid'
+import fs from 'fs'
 
 export const getPreviews = (req: Request, res: Response) => {
 	try {
@@ -46,27 +47,65 @@ export const getVideoBySearch = (req: Request, res: Response) => {
 }
 
 export const addVideo = (req: Request, res: Response) => {
-	try {
-		const token = (req.body.headers.Authorization || '').replace(/Bearer\s?/, '')
+	console.log(req.body)
 
+	try {
+		pool.query(
+			'INSERT INTO videos (id, link, title, preview, description) VALUES ($1, $2,$3, $4, $5)',
+			[uuidv4(), req.file?.originalname, req.body.title, req.body.imageUrl, req.body.description],
+			(error: Error, results: QueryResult) => {
+				if (error) throw error
+				res.status(201).json({
+					message: 'ok',
+				})
+			},
+		)
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export const deleteVideoById = (req: Request, res: Response) => {
+	try {
+		const token = (req.headers.authorization || '').replace(/Bearer\s?/, '')
+		const filePath = `uploads/previews/${req.query.prevname}`
+		const filePath2 = `uploads/videos/${req.query.videoname}`
 		jwt.verify(token, `${process.env.JWT_SECRET}`, (err: jwt.VerifyErrors | null, decoded: any) => {
 			if (err) {
 				res.json({ error: 'Неверный токен' })
 			} else {
+				req.query.prevname &&
+					fs.stat(filePath, (err, stats) => {
+						fs.unlink(filePath, (err) => {
+							if (err) {
+								console.error(err)
+							}
+						})
+					})
+				req.query.videoname &&
+					fs.stat(filePath2, (err, stats) => {
+						fs.unlink(filePath2, (err) => {
+							if (err) {
+								console.error(err)
+							}
+						})
+					})
+
 				pool.query(
-					'INSERT INTO videos (id, link, title, preview, description) VALUES ($1, $2,$3, $4, $5)',
-					[
-						uuidv4(),
-						req.file?.originalname,
-						req.body.title,
-						req.body.imageUrl,
-						req.body.description,
-					],
+					'DELETE FROM videos WHERE id = $1',
+					[req.query.id],
 					(error: Error, results: QueryResult) => {
 						if (error) throw error
-						res.status(201).json({
-							message: 'ok',
-						})
+						pool.query(
+							'DELETE FROM comments WHERE video_id = $1',
+							[req.query.id],
+							(error: Error, results: QueryResult) => {
+								if (error) throw error
+								res.status(201).json({
+									message: 'ok',
+								})
+							},
+						)
 					},
 				)
 			}

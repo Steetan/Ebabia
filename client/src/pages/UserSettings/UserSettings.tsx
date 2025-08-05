@@ -5,11 +5,11 @@ import { useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { FormControlLabel, Switch, TextField } from '@mui/material'
 
-// import { UpdateUserForm } from '../../components'
 import { setData, setIsAuth, setUserImgUrl } from '../../redux/slices/authSlice'
 import Cookies from 'js-cookie'
 import { customAxios } from '../../utils/axios'
 import UpdateUserForm from '../../components/UpdateUserForm'
+import { customAxiosFile } from '../../utils/axiosFile'
 
 export interface UserData {
 	name: string
@@ -76,13 +76,14 @@ const UserSettings = ({}) => {
 			const formData = new FormData()
 			formData.append('image', event.target.files[0])
 
-			await customAxios(`/userimage`, 'post', formData).then((data) => {
+			await customAxiosFile(`/userimage`, 'post', formData).then((data) => {
 				try {
 					dispatch(setUserImgUrl(`${data.url}`))
 					customAxios(`/auth/updimg`, 'patch', {
 						img: data.url,
-					}).then(({ data }) => {
-						data && alert('Аватарка была успешно изменена')
+					}).then((data2) => {
+						data2 && alert('Аватарка была успешно изменена')
+						console.log(data2)
 					})
 				} catch (error) {
 					console.log(error)

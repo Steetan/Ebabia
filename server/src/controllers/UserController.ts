@@ -137,7 +137,9 @@ export const updateUser = async (req: Request, res: Response) => {
 			return res.status(403).json({ error: errors.array() })
 		}
 
-		const token = (req.headers.authorization || '').replace(/Bearer\s?/, '')
+		console.log('body', req.body.headers.Authorization)
+
+		const token = (req.body.headers.Authorization || '').replace(/Bearer\s?/, '')
 
 		jwt.verify(token, `${process.env.JWT_SECRET}`, (err: jwt.VerifyErrors | null, decoded: any) => {
 			if (err) {
@@ -173,7 +175,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
 export const updateUserImg = async (req: Request, res: Response) => {
 	try {
-		const token = (req.headers.authorization || '').replace(/Bearer\s?/, '')
+		const token = (req.body.headers.Authorization || '').replace(/Bearer\s?/, '')
 
 		jwt.verify(token, `${process.env.JWT_SECRET}`, (err: jwt.VerifyErrors | null, decoded: any) => {
 			if (err) {

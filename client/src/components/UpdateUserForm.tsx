@@ -64,9 +64,8 @@ export const UpdateUserForm = ({}) => {
 					label='Фамилия'
 					className='form-block__input form-block__input--update'
 					variant='outlined'
-					{...register('fname', { required: 'Укажите фамилию' })}
+					{...register('fname')}
 				/>
-				{errors.fname && <p style={{ color: 'red' }}>{errors.fname.message}</p>}
 				<TextField
 					id='outlined-basic'
 					label='Email'

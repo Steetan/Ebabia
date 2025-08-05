@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express'
 import {
 	addVideo,
+	deleteVideoById,
 	getPreviews,
 	getVideoById,
 	getVideoBySearch,
@@ -24,7 +25,7 @@ import {
 	updateValidator,
 } from './middlewares/validations.js'
 import checkAuth from './utils/checkAuth.js'
-import { addNews, getAllNews } from './controllers/NewsController.js'
+import { addNews, deleteNewsById, getAllNews } from './controllers/NewsController.js'
 import { addComment, getComments } from './controllers/CommentController.js'
 
 const router = Router()
@@ -105,6 +106,8 @@ router.patch('/auth/update', checkAuth, updateValidator, updateUser)
 router.patch('/auth/updimg', checkAuth, updateUserImg)
 router.patch('/auth/updpass', checkAuth, updatePasswordValidator, updatePasswordUser)
 
+router.delete('/news', deleteNewsById)
+router.delete('/video', deleteVideoById)
 router.delete('/user', deleteUser)
 router.delete('/upload/user/delete/:filename', deleteUserImg)
 

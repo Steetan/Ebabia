@@ -4,7 +4,7 @@
 	gap: 20px;
 	flex-direction: column;
 	&__img img {
-		width: 400px;
+		width: 100%;
 	}
 	&__block {
 		border: 1px solid #000;
@@ -15,6 +15,7 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		max-width: 460px;
+		max-width: 600px;
+		font-size: 25px;
 	}
 }

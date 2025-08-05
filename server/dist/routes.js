@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { addVideo, getPreviews, getVideoById, getVideoBySearch, } from './controllers/VideoController.js';
+import { addVideo, deleteVideoById, getPreviews, getVideoById, getVideoBySearch, } from './controllers/VideoController.js';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import { createUser, deleteUser, deleteUserImg, getMeInfo, loginUser, updatePasswordUser, updateUser, updateUserImg, } from './controllers/UserController.js';
 import { registerValidator, updatePasswordValidator, updateValidator, } from './middlewares/validations.js';
 import checkAuth from './utils/checkAuth.js';
-import { addNews, getAllNews } from './controllers/NewsController.js';
+import { addNews, deleteNewsById, getAllNews } from './controllers/NewsController.js';
 import { addComment, getComments } from './controllers/CommentController.js';
 const router = Router();
 const storageVideos = multer.diskStorage({
@@ -77,6 +77,8 @@ router.post('/userimage', uploadUserIcons.single('image'), (req, res) => {
 router.patch('/auth/update', checkAuth, updateValidator, updateUser);
 router.patch('/auth/updimg', checkAuth, updateUserImg);
 router.patch('/auth/updpass', checkAuth, updatePasswordValidator, updatePasswordUser);
+router.delete('/news', deleteNewsById);
+router.delete('/video', deleteVideoById);
 router.delete('/user', deleteUser);
 router.delete('/upload/user/delete/:filename', deleteUserImg);
 router.delete('/prev/:filename', (req, res) => {

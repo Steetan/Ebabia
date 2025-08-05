@@ -1,5 +1,5 @@
 export default (req, res, next) => {
-    const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
+    const token = (req.body.headers.Authorization || '').replace(/Bearer\s?/, '');
     if (token) {
         next();
     }

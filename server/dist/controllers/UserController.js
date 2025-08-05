@@ -125,7 +125,8 @@ export const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, functi
         if (!errors.isEmpty()) {
             return res.status(403).json({ error: errors.array() });
         }
-        const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
+        console.log('body', req.body.headers.Authorization);
+        const token = (req.body.headers.Authorization || '').replace(/Bearer\s?/, '');
         jwt.verify(token, `${process.env.JWT_SECRET}`, (err, decoded) => {
             if (err) {
                 res.status(401).json({ error: 'Неверный токен' });
@@ -153,7 +154,7 @@ export const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, functi
 });
 export const updateUserImg = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
+        const token = (req.body.headers.Authorization || '').replace(/Bearer\s?/, '');
         jwt.verify(token, `${process.env.JWT_SECRET}`, (err, decoded) => {
             if (err) {
                 res.status(401).json({ error: 'Неверный токен' });

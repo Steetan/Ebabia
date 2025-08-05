@@ -36,12 +36,7 @@ const AddVideoForm: React.FC = () => {
 			formData.append('imageUrl', imgUrl)
 
 			try {
-				await customAxios(`/addvideo`, 'post', {
-					title: data.title,
-					description: data.description,
-					video: videoFile,
-					imageUrl: imgUrl,
-				}).then(() => {
+				await customAxiosFile(`/addvideo`, 'post', formData).then(() => {
 					navigate('/')
 				})
 			} catch (error) {
