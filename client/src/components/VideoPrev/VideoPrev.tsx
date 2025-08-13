@@ -54,7 +54,11 @@ const VideoPrev: React.FC<any> = ({ id, preview, title, link }) => {
 				</div>
 				<div className='video-prev__bottom'>
 					<div className='video-prev__title'>{title}</div>
-					{dataUser.is_admin && <button onClick={onDeleteVideo}>Удалить</button>}
+					{dataUser.is_admin && (
+						<button className='button' onClick={onDeleteVideo}>
+							Удалить
+						</button>
+					)}
 				</div>
 			</div>
 		</div>

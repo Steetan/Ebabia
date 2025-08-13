@@ -1,6 +1,8 @@
 import React from 'react'
 import ContentTop from '../../components/ContentTop/ContentTop'
 import { customAxios } from '../../utils/axios'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../redux/store'
 
 const NewsBlock: React.FC<{
 	id: string
@@ -8,6 +10,8 @@ const NewsBlock: React.FC<{
 	img_link: string
 	onFetchData: any
 }> = ({ description, img_link, id, onFetchData }) => {
+	const { isAdmin } = useSelector((state: RootState) => state.authSlice)
+
 	const onDeleteNews = () => {
 		if (window.confirm('Вы действительно хотите удалить пост?')) {
 			try {
@@ -23,7 +27,11 @@ const NewsBlock: React.FC<{
 
 	return (
 		<div className='news__block'>
-			<button onClick={onDeleteNews}>удалить пост</button>
+			{isAdmin && (
+				<button className='button' onClick={onDeleteNews}>
+					удалить пост
+				</button>
+			)}
 			<div className='news__img'>
 				<img src={`${process.env.REACT_APP_SERVER_URL}/uploads/news/${img_link}`} alt='' />
 			</div>

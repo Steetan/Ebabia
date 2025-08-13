@@ -29,6 +29,7 @@ export const PopupMenu: React.FC<IPopupMenu> = ({ setIsVisiblePopup }) => {
 						dispatch(setData({ ...data }))
 						dispatch(setUserImgUrl(data.icon_url))
 						dispatch(setIsAuth(true))
+						data.is_admin && dispatch(setIsAdmin(true))
 					})
 			} catch (error) {
 				console.error('Ошибка при авторизации', error)

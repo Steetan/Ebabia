@@ -21,7 +21,6 @@ export interface UserData {
 }
 
 const UserSettings = ({}) => {
-	const [isAdmin, setIsAdmin] = React.useState(false)
 	const [isChecked, setIsChecked] = React.useState(false)
 
 	const inputFileRef = React.useRef<HTMLInputElement>(null)

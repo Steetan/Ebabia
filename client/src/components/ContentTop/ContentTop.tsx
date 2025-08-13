@@ -15,7 +15,7 @@ const ContentTop: React.FC<{
 	}
 
 	if (isLoading) {
-		return <div>Loading...</div>
+		return <div>Загрузка...</div>
 	}
 
 	if (error) {

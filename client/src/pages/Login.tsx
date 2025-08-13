@@ -6,7 +6,7 @@ import { customAxios } from '../utils/axios'
 import Cookies from 'js-cookie'
 import { RootState, useAppDispatch } from '../redux/store'
 import { useSelector } from 'react-redux'
-import { setData, setIsAuth } from '../redux/slices/authSlice'
+import { setData, setIsAdmin, setIsAuth } from '../redux/slices/authSlice'
 
 export interface FormData {
 	email: string
@@ -35,9 +35,10 @@ const Login = ({}) => {
 		try {
 			await customAxios(`/auth/login?email=${data.email}&password=${data.password}`, 'get').then(
 				(data) => {
-					Cookies.set('token', data, { expires: 30 })
+					Cookies.set('token', data.token, { expires: 30 })
 					dispatch(setData({ name: data.name, fname: data.fname, email: data.email }))
 					dispatch(setIsAuth(true))
+					data.isAdmin && dispatch(setIsAdmin(true))
 					navigate('/')
 				},
 			)

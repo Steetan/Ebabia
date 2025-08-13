@@ -13,6 +13,8 @@ const AdminPanel: React.FC = () => {
 	const { dataUser } = useSelector((state: RootState) => state.authSlice)
 	const navigation = useNavigate()
 
+	const [isActiveForm, setIsActiveForm] = React.useState<boolean>(true)
+
 	React.useEffect(() => {
 		if (!dataUser.is_admin) {
 			navigation('/')
@@ -21,8 +23,32 @@ const AdminPanel: React.FC = () => {
 
 	return (
 		<div className='adminpanel'>
-			<AddVideoForm />
-			<AddNewsForm />
+			<div>
+				<ul className='aside'>
+					<div className='aside-nav'>
+						<li
+							className={
+								isActiveForm ? 'aside__nav-item aside__nav-item--active' : 'aside__nav-item'
+							}
+							onClick={() => setIsActiveForm(true)}
+						>
+							Видео
+						</li>
+						<li
+							className={
+								!isActiveForm ? 'aside__nav-item aside__nav-item--active' : 'aside__nav-item'
+							}
+							onClick={() => setIsActiveForm(false)}
+						>
+							Новости
+						</li>
+					</div>
+				</ul>
+			</div>
+			<div>
+				{isActiveForm && <AddVideoForm />}
+				{!isActiveForm && <AddNewsForm />}
+			</div>
 		</div>
 	)
 }

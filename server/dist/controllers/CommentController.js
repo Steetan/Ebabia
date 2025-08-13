@@ -3,7 +3,7 @@ import { pool } from '../db.js';
 import { v4 as uuidv4 } from 'uuid';
 export const getComments = (req, res) => {
     try {
-        pool.query('SELECT * FROM comments LEFT JOIN users ON comments.user_id = users.id WHERE comments.video_id = $1', [req.query.look], (error, results) => {
+        pool.query('SELECT comments.id, comments.description, users.name, users.fname, users.icon_url FROM comments LEFT JOIN users ON comments.user_id = users.id WHERE comments.video_id = $1', [req.query.look], (error, results) => {
             if (error)
                 throw error;
             res.status(200).json(results.rows);

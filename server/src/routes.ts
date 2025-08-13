@@ -28,6 +28,7 @@ import checkAuth from './utils/checkAuth.js'
 import { addNews, deleteNewsById, getAllNews } from './controllers/NewsController.js'
 import { addComment, getComments } from './controllers/CommentController.js'
 import { v4 as uuidv4 } from 'uuid'
+import { pool } from './db.js'
 
 const router = Router()
 
@@ -93,30 +94,30 @@ router.post('/addvideo', upload.single('video'), addVideo)
 
 router.post('/prev', uploadImage.single('image'), (req, res) => {
 	res.status(201).json({
-		url: `${req.file?.originalname}`,
+		url: `${req.file?.filename}`,
 	})
 })
 
 router.post('/newsprev', uploadNewsImage.single('image'), (req, res) => {
 	res.status(201).json({
-		url: `${req.file?.originalname}`,
+		url: `${req.file?.filename}`,
 	})
 })
 
 router.post('/userimage', uploadUserIcons.single('image'), (req, res) => {
 	res.status(201).json({
-		url: `${req.file?.originalname}`,
+		url: `${req.file?.filename}`,
 	})
 })
 
 router.patch('/auth/update', checkAuth, updateValidator, updateUser)
-router.patch('/auth/updimg', checkAuth, updateUserImg)
+router.patch('/auth/updimg', updateUserImg)
 router.patch('/auth/updpass', checkAuth, updatePasswordValidator, updatePasswordUser)
 
 router.delete('/news', deleteNewsById)
 router.delete('/video', deleteVideoById)
 router.delete('/user', deleteUser)
-router.delete('/upload/user/delete/:filename', deleteUserImg)
+router.delete('/userimage/:filename', deleteUserImg)
 
 router.delete('/prev/:filename', (req, res) => {
 	const fileName = req.params.filename
@@ -133,18 +134,6 @@ router.delete('/prev/:filename', (req, res) => {
 router.delete('/newsprev/:filename', (req, res) => {
 	const fileName = req.params.filename
 	const filePath = path.join('uploads/news', fileName)
-
-	fs.unlink(filePath, (err) => {
-		if (err) {
-			return res.status(500).json({ error: 'Ошибка при удалении файла' })
-		}
-		res.json({ message: 'Файл успешно удален' })
-	})
-})
-
-router.delete('/userimage/:filename', (req, res) => {
-	const fileName = req.params.filename
-	const filePath = path.join('uploads/userIcons', fileName)
 
 	fs.unlink(filePath, (err) => {
 		if (err) {

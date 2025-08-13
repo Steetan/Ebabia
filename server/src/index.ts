@@ -8,7 +8,7 @@ const app = express()
 const PORT: number = Number(process.env.PORT) || 8080
 
 const corsOptions: CorsOptions = {
-	origin: 'http://localhost:3000',
+	origin: ['http://localhost:3000'],
 	credentials: true,
 	optionsSuccessStatus: 200,
 }

@@ -40,9 +40,8 @@ export const getVideoBySearch = (req, res) => {
 };
 export const addVideo = (req, res) => {
     var _a;
-    console.log(req.body);
     try {
-        pool.query('INSERT INTO videos (id, link, title, preview, description) VALUES ($1, $2,$3, $4, $5)', [uuidv4(), (_a = req.file) === null || _a === void 0 ? void 0 : _a.originalname, req.body.title, req.body.imageUrl, req.body.description], (error, results) => {
+        pool.query('INSERT INTO videos (id, link, title, preview, description) VALUES ($1, $2,$3, $4, $5)', [uuidv4(), (_a = req.file) === null || _a === void 0 ? void 0 : _a.filename, req.body.title, req.body.imageUrl, req.body.description], (error, results) => {
             if (error)
                 throw error;
             res.status(201).json({

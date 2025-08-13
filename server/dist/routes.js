@@ -8,13 +8,15 @@ import { registerValidator, updatePasswordValidator, updateValidator, } from './
 import checkAuth from './utils/checkAuth.js';
 import { addNews, deleteNewsById, getAllNews } from './controllers/NewsController.js';
 import { addComment, getComments } from './controllers/CommentController.js';
+import { v4 as uuidv4 } from 'uuid';
 const router = Router();
 const storageVideos = multer.diskStorage({
     destination: (_, __, cb) => {
         cb(null, 'uploads/videos');
     },
     filename: (_, file, cb) => {
-        cb(null, file.originalname);
+        const ext = path.extname(file.originalname); // Получите расширение файла
+        cb(null, `${uuidv4()}${ext}`); // Используйте UUID и добавьте расширение
     },
 });
 const storagePreviews = multer.diskStorage({
@@ -22,7 +24,8 @@ const storagePreviews = multer.diskStorage({
         cb(null, 'uploads/previews');
     },
     filename: (_, file, cb) => {
-        cb(null, file.originalname);
+        const ext = path.extname(file.originalname);
+        cb(null, `${uuidv4()}${ext}`);
     },
 });
 const storageNewsPreviews = multer.diskStorage({
@@ -30,7 +33,8 @@ const storageNewsPreviews = multer.diskStorage({
         cb(null, 'uploads/news');
     },
     filename: (_, file, cb) => {
-        cb(null, file.originalname);
+        const ext = path.extname(file.originalname);
+        cb(null, `${uuidv4()}${ext}`);
     },
 });
 const storageUserIcons = multer.diskStorage({
@@ -38,7 +42,8 @@ const storageUserIcons = multer.diskStorage({
         cb(null, 'uploads/userIcons');
     },
     filename: (_, file, cb) => {
-        cb(null, file.originalname);
+        const ext = path.extname(file.originalname);
+        cb(null, `${uuidv4()}${ext}`);
     },
 });
 const upload = multer({ storage: storageVideos });
@@ -59,28 +64,28 @@ router.post('/addvideo', upload.single('video'), addVideo);
 router.post('/prev', uploadImage.single('image'), (req, res) => {
     var _a;
     res.status(201).json({
-        url: `${(_a = req.file) === null || _a === void 0 ? void 0 : _a.originalname}`,
+        url: `${(_a = req.file) === null || _a === void 0 ? void 0 : _a.filename}`,
     });
 });
 router.post('/newsprev', uploadNewsImage.single('image'), (req, res) => {
     var _a;
     res.status(201).json({
-        url: `${(_a = req.file) === null || _a === void 0 ? void 0 : _a.originalname}`,
+        url: `${(_a = req.file) === null || _a === void 0 ? void 0 : _a.filename}`,
     });
 });
 router.post('/userimage', uploadUserIcons.single('image'), (req, res) => {
     var _a;
     res.status(201).json({
-        url: `${(_a = req.file) === null || _a === void 0 ? void 0 : _a.originalname}`,
+        url: `${(_a = req.file) === null || _a === void 0 ? void 0 : _a.filename}`,
     });
 });
 router.patch('/auth/update', checkAuth, updateValidator, updateUser);
-router.patch('/auth/updimg', checkAuth, updateUserImg);
+router.patch('/auth/updimg', updateUserImg);
 router.patch('/auth/updpass', checkAuth, updatePasswordValidator, updatePasswordUser);
 router.delete('/news', deleteNewsById);
 router.delete('/video', deleteVideoById);
 router.delete('/user', deleteUser);
-router.delete('/upload/user/delete/:filename', deleteUserImg);
+router.delete('/userimage/:filename', deleteUserImg);
 router.delete('/prev/:filename', (req, res) => {
     const fileName = req.params.filename;
     const filePath = path.join('uploads/previews', fileName);
@@ -94,16 +99,6 @@ router.delete('/prev/:filename', (req, res) => {
 router.delete('/newsprev/:filename', (req, res) => {
     const fileName = req.params.filename;
     const filePath = path.join('uploads/news', fileName);
-    fs.unlink(filePath, (err) => {
-        if (err) {
-            return res.status(500).json({ error: 'Ошибка при удалении файла' });
-        }
-        res.json({ message: 'Файл успешно удален' });
-    });
-});
-router.delete('/userimage/:filename', (req, res) => {
-    const fileName = req.params.filename;
-    const filePath = path.join('uploads/userIcons', fileName);
     fs.unlink(filePath, (err) => {
         if (err) {
             return res.status(500).json({ error: 'Ошибка при удалении файла' });

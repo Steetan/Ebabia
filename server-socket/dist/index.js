@@ -1,3 +1,4 @@
+import { translateOneDate } from './utils/translateOneDate.js';
 import express from 'express';
 import cors from 'cors';
 import { Server } from '../node_modules/socket.io/dist/index.js';
@@ -22,21 +23,21 @@ socketIO.on('connection', (socket) => {
         const token = (data || '').replace(/Bearer\s?/, '');
         jwt.verify(token, `@dkflbckfd2003`, (err, decoded) => {
             if (decoded.id) {
-                pool.query('SELECT * FROM messages LEFT JOIN users ON messages.user_id = users.id ORDER BY messages.data ASC', (error, results) => {
+                pool.query('SELECT messages.id, messages.user_id, users.name, users.fname, users.icon_url, messages.message, messages.data FROM messages LEFT JOIN users ON messages.user_id = users.id ORDER BY messages.data ASC', (error, results) => {
                     let newArr = [];
-                    results.rows &&
-                        results.rows.forEach((item) => {
-                            newArr.push({
-                                message_id: item.id,
-                                sender_id: item.user_id,
-                                sender_name: item.name,
-                                sender_fname: item.fname,
-                                sender_img: item.icon_url,
-                                message: item.message,
-                                data: item.data,
-                                isCurrentUser: decoded.id === item.user_id ? true : false,
-                            });
+                    results.rows && console.log(results.rows);
+                    results.rows.forEach((item) => {
+                        newArr.push({
+                            message_id: item.id,
+                            sender_id: item.user_id,
+                            sender_name: item.name,
+                            sender_fname: item.fname,
+                            sender_img: item.icon_url,
+                            message: item.message,
+                            data: translateOneDate(item.data),
+                            isCurrentUser: decoded.id === item.user_id ? true : false,
                         });
+                    });
                     socket.emit('getMessages', newArr);
                 });
             }

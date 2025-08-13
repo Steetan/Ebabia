@@ -37,16 +37,19 @@ export const getMeInfo = (req, res) => {
 };
 export const loginUser = (req, res) => {
     try {
-        pool.query('SELECT id, name, fname FROM users WHERE email = $1 AND password = $2', [req.query.email, req.query.password], (error, results) => {
+        pool.query('SELECT id, name, fname, icon_url FROM users WHERE email = $1 AND password = $2', [req.query.email, req.query.password], (error, results) => {
             if (error)
                 throw error;
             results.rows.length
-                ? res.status(200).json(generateJWT({
-                    id: results.rows[0].id,
-                    name: req.body.name,
-                    email: req.query.email,
-                    password: req.query.password,
-                }))
+                ? res.status(200).json({
+                    token: generateJWT({
+                        id: results.rows[0].id,
+                        name: req.body.name,
+                        email: req.query.email,
+                        password: req.query.password,
+                    }),
+                    iconUrl: results.rows[0].icon_url,
+                })
                 : res.status(403).json({ message: 'не удалось войти' });
         });
     }
@@ -203,6 +206,7 @@ export const updatePasswordUser = (req, res) => __awaiter(void 0, void 0, void 0
 export const deleteUserImg = (req, res) => {
     try {
         const filePath = `uploads/userIcons/${req.params.filename}`;
+        console.log(req.params.filename);
         const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
         jwt.verify(token, `${process.env.JWT_SECRET}`, (err, decoded) => {
             if (err) {

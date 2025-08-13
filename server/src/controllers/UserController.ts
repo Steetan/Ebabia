@@ -35,19 +35,24 @@ export const getMeInfo = (req: Request, res: Response) => {
 export const loginUser = (req: Request, res: Response) => {
 	try {
 		pool.query(
-			'SELECT id, name, fname FROM users WHERE email = $1 AND password = $2',
+			'SELECT id, name, fname, icon_url FROM users WHERE email = $1 AND password = $2',
 			[req.query.email, req.query.password],
 			(error: Error, results: QueryResult) => {
 				if (error) throw error
 				results.rows.length
-					? res.status(200).json(
-							generateJWT({
+					? res.status(200).json({
+							name: results.rows[0].name,
+							fname: results.rows[0].fname,
+							email: results.rows[0].email,
+							isAdmin: results.rows[0].is_admin,
+							token: generateJWT({
 								id: results.rows[0].id,
 								name: req.body.name,
 								email: req.query.email,
 								password: req.query.password,
 							}),
-					  )
+							iconUrl: results.rows[0].icon_url,
+					  })
 					: res.status(403).json({ message: 'не удалось войти' })
 			},
 		)
@@ -231,6 +236,8 @@ export const updatePasswordUser = async (req: Request, res: Response) => {
 export const deleteUserImg = (req: Request, res: Response) => {
 	try {
 		const filePath = `uploads/userIcons/${req.params.filename}`
+
+		console.log(req.params.filename)
 
 		const token = (req.headers.authorization || '').replace(/Bearer\s?/, '')
 

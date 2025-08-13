@@ -150,7 +150,7 @@ const Chat: React.FC<{ socket: any }> = ({ socket }) => {
 								<div>
 									<h4 className='chat__message-title'>{item.sender_name}</h4>
 									<p className='chat__message-text'>{item.message}</p>
-									<p className='chat__message-date'>{translateOneDate(item.data)}</p>
+									<p className='chat__message-date'>{item.data}</p>
 								</div>
 							</div>
 					  ))

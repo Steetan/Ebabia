@@ -1,11 +1,9 @@
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { LinearProgress, TextField } from '@mui/material'
-import { customAxios } from '../../utils/axios'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
-import Cookies from 'js-cookie'
 import { customAxiosFile } from '../../utils/axiosFile'
 
 export interface FormData {
@@ -96,7 +94,7 @@ const AddVideoForm: React.FC = () => {
 	!isAuth && navigate('/')
 
 	return (
-		<div className='form-block-wrapper'>
+		<div className='form-block-wrapper adminpanel__form'>
 			<div className='form-block'>
 				<h3 className='form-block__title'>Добавить видео</h3>
 				<form onSubmit={handleSubmit(onSubmit)}>
