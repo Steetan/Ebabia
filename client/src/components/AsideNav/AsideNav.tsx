@@ -15,7 +15,7 @@ const AsideNav: React.FC = ({}) => {
 			<AsideNavItem
 				link={`/video`}
 				title={`Видео`}
-				isActive={location.pathname == '/video' ? true : false}
+				isActive={location.pathname == '/video' || location.pathname == '/fullvideo' ? true : false}
 			/>
 			<AsideNavItem
 				link={`/chat`}

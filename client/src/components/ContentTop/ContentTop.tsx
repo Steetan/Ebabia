@@ -24,7 +24,7 @@ const ContentTop: React.FC<{
 
 	return (
 		<div className='content-top'>
-			<h1>{title}</h1>
+			<h1 style={{ color: '#fff' }}>{title}</h1>
 			<Search setFetchData={setFetchData} />
 		</div>
 	)

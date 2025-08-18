@@ -108,14 +108,14 @@ const Chat: React.FC<{ socket: any }> = ({ socket }) => {
 										: 'chat__message'
 								}
 							>
-								{userImgUrl && (
+								{item.sender_img && (
 									<img
 										src={`${process.env.REACT_APP_SERVER_URL}/uploads/userIcons/${item.sender_img}`}
 										alt=''
 										className='chat__message-img'
 									/>
 								)}
-								{!userImgUrl && (
+								{!item.sender_img && (
 									<svg
 										version='1.0'
 										xmlns='http://www.w3.org/2000/svg'

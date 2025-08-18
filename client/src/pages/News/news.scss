@@ -1,3 +1,5 @@
+@import '../../scss/variables.scss';
+
 .news {
 	display: flex;
 	align-items: center;
@@ -7,7 +9,7 @@
 		width: 100%;
 	}
 	&__block {
-		border: 1px solid #000;
+		color: #fff;
 		border-radius: 10px;
 		padding: 30px;
 		gap: 10px;
@@ -17,5 +19,9 @@
 		align-items: center;
 		max-width: 600px;
 		font-size: 25px;
+		background-color: $gray;
+	}
+	&__data {
+		align-self: flex-start;
 	}
 }

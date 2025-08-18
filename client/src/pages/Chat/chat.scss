@@ -1,3 +1,5 @@
+@import '../../scss/variables.scss';
+
 .chat {
 	min-height: 500px;
 	display: flex;
@@ -5,6 +7,9 @@
 	gap: 20px;
 	align-items: center;
 	position: relative;
+	&__title {
+		color: #fff;
+	}
 	&__block {
 		height: 500px;
 		width: 100%;
@@ -12,7 +17,7 @@
 		display: flex;
 		flex-direction: column;
 		flex: 1 1 auto;
-		border: 2px solid #000;
+		border: 1px solid #7b7b7b;
 		gap: 10px;
 		overflow: auto;
 		border-radius: 10px;
@@ -22,9 +27,10 @@
 		gap: 5px;
 		align-self: flex-start;
 		max-width: 300px;
-		background-color: #0000001c;
+		background-color: $gray;
 		padding: 10px;
 		border-radius: 20px;
+		color: #fff;
 		&--user {
 			align-self: flex-end;
 			flex-flow: row-reverse;
@@ -55,7 +61,6 @@
 		padding: 10px;
 		border: none;
 		border-radius: 10px;
-		border: 1px solid #000;
 	}
 	&__button {
 		display: flex;

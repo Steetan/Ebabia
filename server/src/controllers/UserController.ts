@@ -142,8 +142,6 @@ export const updateUser = async (req: Request, res: Response) => {
 			return res.status(403).json({ error: errors.array() })
 		}
 
-		console.log('body', req.body.headers.Authorization)
-
 		const token = (req.body.headers.Authorization || '').replace(/Bearer\s?/, '')
 
 		jwt.verify(token, `${process.env.JWT_SECRET}`, (err: jwt.VerifyErrors | null, decoded: any) => {

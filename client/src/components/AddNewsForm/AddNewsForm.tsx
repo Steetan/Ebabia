@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import Cookies from 'js-cookie'
 import { customAxiosFile } from '../../utils/axiosFile'
+import { getDate } from '../../utils/getDate'
 
 export interface FormData {
 	title: string
@@ -31,7 +32,11 @@ const AddNewsForm: React.FC = () => {
 		formData.append('imageUrl', imgUrl)
 
 		try {
-			await customAxios(`/news`, 'post', { description: data.description, imgUrl }).then(() => {})
+			await customAxios(`/news`, 'post', {
+				description: data.description,
+				imgUrl,
+				data: getDate(),
+			}).then(() => {})
 		} catch (error) {
 			console.error('Ошибка при добавлении', error)
 		}
@@ -76,6 +81,14 @@ const AddNewsForm: React.FC = () => {
 							multiline
 							rows={4}
 							maxRows={4}
+							sx={{
+								'& .MuiInputBase-input': {
+									color: '#fff', // Цвет текста
+								},
+								'& .MuiInputBase-input::placeholder': {
+									color: '#fff', // Цвет placeholder
+								},
+							}}
 							variant='outlined'
 							{...register('description')}
 						/>

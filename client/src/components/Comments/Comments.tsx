@@ -20,7 +20,6 @@ const Comments: React.FC = ({}) => {
 	const fetchData = async () => {
 		customAxios(`/comments?look=${searchTerm}`, 'get').then((fetData) => {
 			setFetchComments(fetData)
-			console.log(fetData)
 		})
 	}
 	React.useEffect(() => {
@@ -52,7 +51,7 @@ const Comments: React.FC = ({}) => {
 						<form onSubmit={handleSubmit(onSubmit)}>
 							<div className='form-block__inputs'>
 								<TextField
-									placeholder='Описание '
+									placeholder='Описание'
 									multiline
 									rows={2}
 									maxRows={8}

@@ -6,12 +6,10 @@ import http from 'http';
 import { v4 as uuid } from 'uuid';
 import { pool } from './db.js';
 import jwt from 'jsonwebtoken';
-import router from './routes.js';
 const PORT = 6060;
 const app = express();
 const server = http.createServer(app);
 app.use(cors({ origin: '*' }));
-app.use(router);
 const socketIO = new Server(server, {
     cors: {
         origin: '*',
@@ -22,25 +20,23 @@ socketIO.on('connection', (socket) => {
     socket.on('pushConnect', (data) => {
         const token = (data || '').replace(/Bearer\s?/, '');
         jwt.verify(token, `@dkflbckfd2003`, (err, decoded) => {
-            if (decoded.id) {
-                pool.query('SELECT messages.id, messages.user_id, users.name, users.fname, users.icon_url, messages.message, messages.data FROM messages LEFT JOIN users ON messages.user_id = users.id ORDER BY messages.data ASC', (error, results) => {
-                    let newArr = [];
-                    results.rows && console.log(results.rows);
-                    results.rows.forEach((item) => {
-                        newArr.push({
-                            message_id: item.id,
-                            sender_id: item.user_id,
-                            sender_name: item.name,
-                            sender_fname: item.fname,
-                            sender_img: item.icon_url,
-                            message: item.message,
-                            data: translateOneDate(item.data),
-                            isCurrentUser: decoded.id === item.user_id ? true : false,
-                        });
+            pool.query('SELECT messages.id, messages.user_id, users.name, users.fname, users.icon_url, messages.message, messages.data FROM messages LEFT JOIN users ON messages.user_id = users.id ORDER BY messages.data ASC', (error, results) => {
+                let newArr = [];
+                results.rows && console.log(results.rows);
+                results.rows.forEach((item) => {
+                    newArr.push({
+                        message_id: item.id,
+                        sender_id: item.user_id,
+                        sender_name: item.name,
+                        sender_fname: item.fname,
+                        sender_img: item.icon_url,
+                        message: item.message,
+                        data: translateOneDate(item.data),
+                        isCurrentUser: decoded && decoded.id === item.user_id ? true : false,
                     });
-                    socket.emit('getMessages', newArr);
                 });
-            }
+                socket.emit('getMessages', newArr);
+            });
         });
     });
     socket.on('pushMessage', (data) => {

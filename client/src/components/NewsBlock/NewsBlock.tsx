@@ -3,13 +3,15 @@ import ContentTop from '../../components/ContentTop/ContentTop'
 import { customAxios } from '../../utils/axios'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
+import { translateOneDate } from '../../utils/translateOneDate'
 
 const NewsBlock: React.FC<{
 	id: string
 	description: string
 	img_link: string
 	onFetchData: any
-}> = ({ description, img_link, id, onFetchData }) => {
+	data: any
+}> = ({ description, img_link, id, onFetchData, data }) => {
 	const { isAdmin } = useSelector((state: RootState) => state.authSlice)
 
 	const onDeleteNews = () => {
@@ -32,6 +34,7 @@ const NewsBlock: React.FC<{
 					удалить пост
 				</button>
 			)}
+			<h5 className='news__data'>{translateOneDate(data)}</h5>
 			<div className='news__img'>
 				<img src={`${process.env.REACT_APP_SERVER_URL}/uploads/news/${img_link}`} alt='' />
 			</div>

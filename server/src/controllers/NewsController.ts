@@ -25,8 +25,8 @@ export const addNews = (req: Request, res: Response) => {
 				res.json({ error: 'Неверный токен' })
 			} else {
 				pool.query(
-					'INSERT INTO news (id, description, img_link) VALUES ($1, $2,$3)',
-					[uuidv4(), req.body.description, req.body.imgUrl],
+					'INSERT INTO news (id, description, img_link, data) VALUES ($1, $2, $3, $4)',
+					[uuidv4(), req.body.description, req.body.imgUrl, req.body.data],
 					(error: Error, results: QueryResult) => {
 						if (error) throw error
 						res.status(201).json({

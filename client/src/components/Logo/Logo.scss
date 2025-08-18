@@ -4,6 +4,7 @@
 	gap: 10px;
 	&__title {
 		font-weight: 700;
+		color: #fff;
 		@media (max-width: 460px) {
 			display: none;
 		}
