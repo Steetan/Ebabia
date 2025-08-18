@@ -8,7 +8,7 @@ import { translateOneDate } from '../../utils/translateOneDate'
 
 const Chat: React.FC<{ socket: any }> = ({ socket }) => {
 	const [inputText, setInputText] = React.useState('')
-	const { userImgUrl, dataUser } = useSelector((state: RootState) => state.authSlice)
+	const { userImgUrl, dataUser, isAuth } = useSelector((state: RootState) => state.authSlice)
 	const messagesEndRef = React.useRef<HTMLDivElement>(null)
 	const [typingCurrentUser, setTypingCurrentUser] = React.useState<string | null>(null)
 
@@ -160,18 +160,20 @@ const Chat: React.FC<{ socket: any }> = ({ socket }) => {
 					{typingCurrentUser && `${typingCurrentUser} печатает сообщение...`}
 				</span>
 			</div>
-			<div className='chat__button'>
-				<input
-					className='chat__input'
-					type='text'
-					placeholder='Сообщение...'
-					value={inputText}
-					onChange={changeMessage}
-				/>
-				<div className='chat__button-send' onClick={onSubmitMessage}>
-					<img src={require('../../assets/send.png')} alt='' />
+			{isAuth && (
+				<div className='chat__button'>
+					<input
+						className='chat__input'
+						type='text'
+						placeholder='Сообщение...'
+						value={inputText}
+						onChange={changeMessage}
+					/>
+					<div className='chat__button-send' onClick={onSubmitMessage}>
+						<img src={require('../../assets/send.png')} alt='' />
+					</div>
 				</div>
-			</div>
+			)}
 		</div>
 	)
 }

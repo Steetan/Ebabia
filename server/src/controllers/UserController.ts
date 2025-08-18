@@ -208,7 +208,7 @@ export const updatePasswordUser = async (req: Request, res: Response) => {
 			return res.status(403).json({ error: errors.array() })
 		}
 
-		const token = (req.headers.authorization || '').replace(/Bearer\s?/, '')
+		const token = (req.body.headers.Authorization || '').replace(/Bearer\s?/, '')
 
 		jwt.verify(token, `${process.env.JWT_SECRET}`, (err: jwt.VerifyErrors | null, decoded: any) => {
 			if (err) {

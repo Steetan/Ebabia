@@ -4,12 +4,14 @@
 	gap: 10px;
 	color: #fff;
 	&__title {
-		margin-bottom: 15px;
 		font-size: 25px;
 	}
 	&__block {
 		display: flex;
 		gap: 20px;
+		&-right {
+			width: 100%;
+		}
 	}
 	&__video {
 		max-width: 600px;
@@ -26,6 +28,13 @@
 		border-bottom: 1px solid #404040;
 		color: #fff;
 		padding: 10px;
+		&-block {
+			display: flex;
+			gap: 10px;
+			align-items: center;
+			width: 100%;
+			justify-content: space-between;
+		}
 		&-top {
 			display: flex;
 			gap: 10px;
@@ -39,5 +48,16 @@
 			height: 50px;
 			border-radius: 50%;
 		}
+		&-data {
+			font-size: 12px;
+			color: #5f5e5e;
+		}
+	}
+	&__top {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 5px;
+		margin-bottom: 15px;
 	}
 }

@@ -1,11 +1,13 @@
 import React from 'react'
+import { translateOneDate } from '../../utils/translateOneDate'
 
-const Comment: React.FC<{ description: string; name: string; fname: string; icon_url: string }> = ({
-	description,
-	name,
-	fname,
-	icon_url,
-}) => {
+const Comment: React.FC<{
+	description: string
+	name: string
+	fname: string
+	icon_url: string
+	data: any
+}> = ({ description, name, fname, icon_url, data }) => {
 	return (
 		<div className='fullvideo__comment'>
 			<div className='fullvideo__comment-top'>
@@ -48,7 +50,10 @@ const Comment: React.FC<{ description: string; name: string; fname: string; icon
 						</g>
 					</svg>
 				)}
-				<h4>{`${name} ${fname}`}</h4>
+				<div className='fullvideo__comment-block'>
+					<h4>{`${name} ${fname}`}</h4>
+					<h5 className='fullvideo__comment-data'>{translateOneDate(data)}</h5>
+				</div>
 			</div>
 			<p className='fullvideo__comment-desc'>{description}</p>
 		</div>

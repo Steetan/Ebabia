@@ -49,8 +49,15 @@ export const getVideoBySearch = (req: Request, res: Response) => {
 export const addVideo = (req: Request, res: Response) => {
 	try {
 		pool.query(
-			'INSERT INTO videos (id, link, title, preview, description) VALUES ($1, $2,$3, $4, $5)',
-			[uuidv4(), req.file?.filename, req.body.title, req.body.imageUrl, req.body.description],
+			'INSERT INTO videos (id, link, title, preview, description, data) VALUES ($1, $2,$3, $4, $5, $6)',
+			[
+				uuidv4(),
+				req.file?.filename,
+				req.body.title,
+				req.body.imageUrl,
+				req.body.description,
+				req.body.data,
+			],
 			(error: Error, results: QueryResult) => {
 				if (error) throw error
 				res.status(201).json({

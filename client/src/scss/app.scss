@@ -7,6 +7,7 @@
 @import '../pages/Video/video.scss';
 @import '../components/Aside/aside.scss';
 @import '../components/PopupMenu/popupMenu.scss';
+@import '../components/MobileBlock/mobileBlock.scss';
 @import '../pages/FullVideo/fullVideo.scss';
 @import '../pages/AdminPanel/adminPanel.scss';
 @import '../pages/UserSettings/userSettings.scss';
@@ -184,8 +185,15 @@ body {
 	}
 }
 
+.auth {
+	display: flex;
+	gap: 40px;
+	align-items: center;
+}
+
 input,
 textarea {
+	color: #fff;
 	background-color: $gray;
 	&::placeholder {
 		color: #fff !important;
@@ -201,6 +209,11 @@ textarea {
 .MuiOutlinedInput-notchedOutline {
 	border-color: white; /* устанавливаем белый цвет для обводки */
 }
+
+.MuiOutlinedInput-root input {
+	color: white;
+}
+
 .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
 	border-color: white !important; /* устанавливаем белый цвет для обводки и отменяем изменение при наведении */
 }
@@ -213,6 +226,7 @@ textarea {
 .slick-dots li button::before {
 	color: #fff;
 }
+
 .popup-update__close::before,
 .popup-update__close::after {
 	background-color: #fff;

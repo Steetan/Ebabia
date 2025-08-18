@@ -34,7 +34,6 @@ export const UpdateUserForm = ({}) => {
 				...values,
 			})
 
-			console.log(data)
 			Cookies.remove('token')
 			Cookies.set('token', data.token)
 		} catch (error) {
