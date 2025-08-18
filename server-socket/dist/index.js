@@ -22,7 +22,6 @@ socketIO.on('connection', (socket) => {
         jwt.verify(token, `@dkflbckfd2003`, (err, decoded) => {
             pool.query('SELECT messages.id, messages.user_id, users.name, users.fname, users.icon_url, messages.message, messages.data FROM messages LEFT JOIN users ON messages.user_id = users.id ORDER BY messages.data ASC', (error, results) => {
                 let newArr = [];
-                results.rows && console.log(results.rows);
                 results.rows.forEach((item) => {
                     newArr.push({
                         message_id: item.id,

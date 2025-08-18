@@ -3,16 +3,14 @@ import { useVideos } from '../../utils/fetchData'
 import VideoPrev from '../../components/VideoPrev/VideoPrev'
 import { Search } from '../Search/Search'
 import { IVideo } from '../../pages/Video/Video'
+import { useLocation } from 'react-router-dom'
 
 const ContentTop: React.FC<{
 	title: string
 	setFetchData: React.Dispatch<React.SetStateAction<IVideo[]>>
 }> = ({ title, setFetchData }) => {
-	const { data, isLoading, error } = useVideos('/prevvideo')
-
-	const searchVideo = (fetchData2: IVideo[]) => {
-		setFetchData(fetchData2)
-	}
+	const { isLoading, error } = useVideos('/prevvideo')
+	const location = useLocation()
 
 	if (isLoading) {
 		return <div>Загрузка...</div>
@@ -25,7 +23,7 @@ const ContentTop: React.FC<{
 	return (
 		<div className='content-top'>
 			<h1 style={{ color: '#fff' }}>{title}</h1>
-			<Search setFetchData={setFetchData} />
+			{location.pathname !== '/' && <Search setFetchData={setFetchData} />}
 		</div>
 	)
 }

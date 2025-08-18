@@ -12,6 +12,7 @@ import { pool } from '../db.js';
 import { v4 as uuidv4 } from 'uuid';
 import { validationResult } from '../../node_modules/express-validator/lib/validation-result.js';
 import { generateJWT } from '../utils/generateJWT.js';
+import bcrypt from 'bcrypt';
 import fs from 'fs';
 export const getMeInfo = (req, res) => {
     try {
@@ -37,28 +38,44 @@ export const getMeInfo = (req, res) => {
 };
 export const loginUser = (req, res) => {
     try {
-        pool.query('SELECT id, name, fname, icon_url FROM users WHERE email = $1 AND password = $2', [req.query.email, req.query.password], (error, results) => {
+        pool.query('SELECT * FROM users WHERE email = $1', [req.query.email], (error, results) => __awaiter(void 0, void 0, void 0, function* () {
             if (error)
                 throw error;
-            results.rows.length
-                ? res.status(200).json({
-                    name: results.rows[0].name,
-                    fname: results.rows[0].fname,
-                    email: results.rows[0].email,
-                    isAdmin: results.rows[0].is_admin,
-                    token: generateJWT({
-                        id: results.rows[0].id,
-                        name: req.body.name,
-                        email: req.query.email,
-                        password: req.query.password,
-                    }),
-                    iconUrl: results.rows[0].icon_url,
-                })
-                : res.status(403).json({ message: 'не удалось войти' });
-        });
+            // Проверяем, существует ли пользователь
+            if (results.rows.length === 0) {
+                return res.json({
+                    message: 'Неверный логин или пароль',
+                });
+            }
+            const user = results.rows[0];
+            // Сравниваем пароли
+            const isValidPass = yield bcrypt.compare(String(req.query.password), user.password);
+            if (!isValidPass) {
+                return res.json({
+                    access: false,
+                    message: 'Неверный логин или пароль',
+                });
+            }
+            // Если пароль верный, возвращаем данные пользователя
+            res.status(200).json({
+                access: true,
+                name: user.name,
+                fname: user.fname,
+                email: user.email,
+                isAdmin: user.is_admin,
+                token: generateJWT({
+                    id: user.id,
+                    name: user.name,
+                    email: req.query.email,
+                    // Не нужно передавать пароль в JWT
+                }),
+                iconUrl: user.icon_url,
+            });
+        }));
     }
     catch (error) {
         console.log(error);
+        res.status(500).json({ message: 'Ошибка сервера' });
     }
 };
 export const deleteUser = (req, res) => {
@@ -105,8 +122,11 @@ export const createUser = (req, res) => __awaiter(void 0, void 0, void 0, functi
             .json({ success: false, message: 'Пользователь с таким именем уже существует' });
     }
     const userId = uuidv4();
+    const password = req.body.password;
+    const salt = yield bcrypt.genSalt(10);
+    const passwordHash = yield bcrypt.hash(password, salt);
     try {
-        pool.query('INSERT INTO users (id, name, fname, password, email, icon_url) VALUES ($1, $2, $3, $4, $5, $6)', [userId, req.body.name, req.body.fname, req.body.password, req.body.email, req.body.imgUrl], (error, results) => {
+        pool.query('INSERT INTO users (id, name, fname, password, email, icon_url) VALUES ($1, $2, $3, $4, $5, $6)', [userId, req.body.name, req.body.fname, passwordHash, req.body.email, req.body.imgUrl], (error, results) => {
             if (error)
                 throw error;
             res.status(201).json({
@@ -187,12 +207,15 @@ export const updatePasswordUser = (req, res) => __awaiter(void 0, void 0, void 0
             return res.status(403).json({ error: errors.array() });
         }
         const token = (req.body.headers.Authorization || '').replace(/Bearer\s?/, '');
+        const password = req.body.password;
+        const salt = yield bcrypt.genSalt(10);
+        const passwordHash = yield bcrypt.hash(password, salt);
         jwt.verify(token, `${process.env.JWT_SECRET}`, (err, decoded) => {
             if (err) {
                 res.status(401).json({ error: 'Неверный токен' });
             }
             else {
-                pool.query('UPDATE users SET password = $1 WHERE id=$2', [req.body.password, decoded.id], (error, results) => {
+                pool.query('UPDATE users SET password = $1 WHERE id=$2', [passwordHash, decoded.id], (error, results) => {
                     if (error)
                         throw error;
                     res.status(200).json({ message: 'Пароль был успешно обновлен!' });

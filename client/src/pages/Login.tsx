@@ -34,11 +34,15 @@ const Login = ({}) => {
 		try {
 			await customAxios(`/auth/login?email=${data.email}&password=${data.password}`, 'get').then(
 				(data) => {
-					Cookies.set('token', data.token, { expires: 30 })
-					dispatch(setData({ name: data.name, fname: data.fname, email: data.email }))
-					dispatch(setIsAuth(true))
-					data.isAdmin && dispatch(setIsAdmin(true))
-					navigate('/')
+					if (data.access) {
+						Cookies.set('token', data.token, { expires: 30 })
+						dispatch(setData({ name: data.name, fname: data.fname, email: data.email }))
+						dispatch(setIsAuth(true))
+						data.isAdmin && dispatch(setIsAdmin(true))
+						navigate('/')
+					} else {
+						alert(data.message)
+					}
 				},
 			)
 		} catch (error) {
