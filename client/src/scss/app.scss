@@ -200,11 +200,17 @@ textarea {
 	}
 }
 
+.MuiInputBase-root {
+	textarea {
+		color: white;
+	} /* устанавливаем белый цвет для label */
+}
+
 .MuiInputBase-input {
 	color: white; /* устанавливаем белый цвет для текста */
 }
 .MuiFormLabel-root {
-	color: white; /* устанавливаем белый цвет для label */
+	color: white;
 }
 .MuiOutlinedInput-notchedOutline {
 	border-color: white; /* устанавливаем белый цвет для обводки */
@@ -223,6 +229,11 @@ textarea {
 .MuiInputLabel-formControl {
 	color: white !important; /* устанавливаем белый цвет для текста label */
 }
+
+.MuiInputBase-input .MuiOutlinedInput-input textarea {
+	color: #fff !important;
+}
+
 .slick-dots li button::before {
 	color: #fff;
 }
