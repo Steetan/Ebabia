@@ -2,9 +2,6 @@ import Cookies from 'js-cookie'
 import React from 'react'
 import { RootState } from '../../redux/store'
 import { useSelector } from 'react-redux'
-import { getDate } from '../../utils/getDate'
-import { translateDate } from '../../utils/translateDate'
-import { translateOneDate } from '../../utils/translateOneDate'
 
 const Chat: React.FC<{ socket: any }> = ({ socket }) => {
 	const [inputText, setInputText] = React.useState('')
@@ -56,7 +53,6 @@ const Chat: React.FC<{ socket: any }> = ({ socket }) => {
 				sender_name: dataUser.name,
 				sender_fname: dataUser.fname,
 				sender_img: userImgUrl,
-				data: getDate(),
 			})
 			setInputText('')
 		}

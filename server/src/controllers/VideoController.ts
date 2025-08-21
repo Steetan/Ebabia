@@ -4,6 +4,7 @@ import { QueryResult } from 'pg'
 import { pool } from '../db.js'
 import { v4 as uuidv4 } from 'uuid'
 import fs from 'fs'
+import { getDate } from '../utils/getDate.js'
 
 export const getPreviews = (req: Request, res: Response) => {
 	try {
@@ -56,7 +57,7 @@ export const addVideo = (req: Request, res: Response) => {
 				req.body.title,
 				req.body.imageUrl,
 				req.body.description,
-				req.body.data,
+				getDate(),
 			],
 			(error: Error, results: QueryResult) => {
 				if (error) throw error

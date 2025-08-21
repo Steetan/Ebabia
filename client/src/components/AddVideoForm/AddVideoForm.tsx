@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import { customAxiosFile } from '../../utils/axiosFile'
-import { getDate } from '../../utils/getDate'
 
 export interface FormData {
 	title: string
@@ -34,7 +33,6 @@ const AddVideoForm: React.FC = () => {
 			formData.append('description', data.description)
 			formData.append('video', videoFile)
 			formData.append('imageUrl', imgUrl)
-			formData.append('data', getDate())
 
 			const xhr = new XMLHttpRequest()
 			xhr.open('POST', `${process.env.REACT_APP_SERVER_URL}/addvideo`, true)

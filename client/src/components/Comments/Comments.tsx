@@ -6,7 +6,6 @@ import { RootState } from '../../redux/store'
 import { TextField } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
-import { getDate } from '../../utils/getDate'
 
 const Comments: React.FC = ({}) => {
 	const [searchParams, setSearchParams] = useSearchParams()
@@ -35,7 +34,6 @@ const Comments: React.FC = ({}) => {
 			await customAxios(`/comments`, 'post', {
 				description: values.description,
 				videoid: searchTerm,
-				data: getDate(),
 			}).then(() => {
 				fetchData()
 			})

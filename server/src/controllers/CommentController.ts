@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 import { QueryResult } from 'pg'
 import { pool } from '../db.js'
 import { v4 as uuidv4 } from 'uuid'
+import { getDate } from '../utils/getDate.js'
 
 export const getComments = (req: Request, res: Response) => {
 	try {
@@ -29,7 +30,7 @@ export const addComment = (req: Request, res: Response) => {
 			} else {
 				pool.query(
 					'INSERT INTO comments (id, description, user_id, video_id, data) VALUES ($1, $2,$3, $4, $5)',
-					[uuidv4(), req.body.description, decoded.id, req.body.videoid, req.body.data],
+					[uuidv4(), req.body.description, decoded.id, req.body.videoid, getDate()],
 					(error: Error, results: QueryResult) => {
 						if (error) throw error
 						res.status(201).json({

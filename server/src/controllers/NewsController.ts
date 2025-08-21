@@ -4,6 +4,7 @@ import { QueryResult } from 'pg'
 import { pool } from '../db.js'
 import { v4 as uuidv4 } from 'uuid'
 import fs from 'fs'
+import { getDate } from '../utils/getDate.js'
 
 export const getAllNews = (req: Request, res: Response) => {
 	try {
@@ -26,7 +27,7 @@ export const addNews = (req: Request, res: Response) => {
 			} else {
 				pool.query(
 					'INSERT INTO news (id, description, img_link, data) VALUES ($1, $2, $3, $4)',
-					[uuidv4(), req.body.description, req.body.imgUrl, req.body.data],
+					[uuidv4(), req.body.description, req.body.imgUrl, getDate()],
 					(error: Error, results: QueryResult) => {
 						if (error) throw error
 						res.status(201).json({

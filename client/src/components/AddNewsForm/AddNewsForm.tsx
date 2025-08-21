@@ -5,9 +5,7 @@ import { customAxios } from '../../utils/axios'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
-import Cookies from 'js-cookie'
 import { customAxiosFile } from '../../utils/axiosFile'
-import { getDate } from '../../utils/getDate'
 
 export interface FormData {
 	title: string
@@ -35,7 +33,6 @@ const AddNewsForm: React.FC = () => {
 			await customAxios(`/news`, 'post', {
 				description: data.description,
 				imgUrl,
-				data: getDate(),
 			}).then(() => {})
 		} catch (error) {
 			console.error('Ошибка при добавлении', error)
