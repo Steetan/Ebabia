@@ -7,7 +7,7 @@ const MobileBlock = () => {
 			<img className='mobile-block__img' src={require('../../assets/mobile.jpg')} alt='' />
 			<a
 				className='button'
-				href='https://drive.usercontent.google.com/u/0/uc?id=1Vtcez85ICfnZVYTcfZWsqMbjXmhRd_Gb&export=download'
+				href='https://drive.usercontent.google.com/u/0/uc?id=13y_FbvJrLz8XEWIlNFxHhLYSNt3FXZJa&export=download'
 			>
 				скачать
 			</a>
