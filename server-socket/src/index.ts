@@ -7,6 +7,7 @@ import { v4 as uuid } from 'uuid'
 import { pool } from './db.js'
 import { QueryResult } from 'pg'
 import jwt from 'jsonwebtoken'
+import { getDate } from './utils/getDate.js'
 
 const PORT = 6060
 
@@ -103,7 +104,7 @@ socketIO.on('connection', (socket) => {
 					const messageId = uuid()
 					pool.query(
 						'INSERT INTO messages (id, message, user_id, data) VALUES ($1, $2, $3, $4)',
-						[messageId, data.message, decoded.id, data.data],
+						[messageId, data.message, decoded.id, getDate()],
 						(error: Error, results: QueryResult) => {
 							const newObj = {
 								message_id: messageId,
