@@ -113,7 +113,7 @@ socketIO.on('connection', (socket) => {
 								sender_name: data.sender_name,
 								sender_fname: data.sender_fname,
 								sender_img: data.sender_img,
-								data: data.data,
+								data: getDate(),
 							}
 							socketIO.emit('newMessage', newObj)
 						},
