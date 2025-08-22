@@ -6,6 +6,7 @@ import http from 'http';
 import { v4 as uuid } from 'uuid';
 import { pool } from './db.js';
 import jwt from 'jsonwebtoken';
+import { getDate } from './utils/getDate.js';
 const PORT = 6060;
 const app = express();
 const server = http.createServer(app);
@@ -43,7 +44,7 @@ socketIO.on('connection', (socket) => {
         jwt.verify(token, `@dkflbckfd2003`, (err, decoded) => {
             if (decoded.id) {
                 const messageId = uuid();
-                pool.query('INSERT INTO messages (id, message, user_id, data) VALUES ($1, $2, $3, $4)', [messageId, data.message, decoded.id, data.data], (error, results) => {
+                pool.query('INSERT INTO messages (id, message, user_id, data) VALUES ($1, $2, $3, $4)', [messageId, data.message, decoded.id, getDate()], (error, results) => {
                     const newObj = {
                         message_id: messageId,
                         message: data.message,
