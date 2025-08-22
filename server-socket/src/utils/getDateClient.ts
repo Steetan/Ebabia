@@ -7,5 +7,5 @@ export const getDate = () => {
 	const hours = date.getHours() + 3 >= 10 ? date.getHours() + 3 : `0${date.getHours() + 3}`
 	const minutes = date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`
 
-	return `$${year}-${month}-${day} ${hours}:${minutes}`
+	return `${day}.${month}.${year} ${hours}:${minutes}`
 }
