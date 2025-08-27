@@ -7,6 +7,21 @@
 	gap: 20px;
 	align-items: center;
 	position: relative;
+	&__emoji {
+		padding: 5px;
+		border: 1px solid #000;
+		top: -150px;
+		right: 0;
+		border-radius: 10px;
+		position: absolute;
+		background-color: #282828;
+		max-width: 110px;
+		width: 100%;
+		span {
+			cursor: pointer;
+			padding: 5px;
+		}
+	}
 	&__title {
 		color: #fff;
 	}
@@ -65,6 +80,11 @@
 	&__button {
 		display: flex;
 		align-items: center;
+		position: relative;
+		&-emoji {
+			background: none;
+			border: none;
+		}
 		&-send {
 			cursor: pointer;
 			img {

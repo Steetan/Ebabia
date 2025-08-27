@@ -2,12 +2,35 @@ import Cookies from 'js-cookie'
 import React from 'react'
 import { RootState } from '../../redux/store'
 import { useSelector } from 'react-redux'
+import dataEmoji from '@emoji-mart/data'
+import Picker from '@emoji-mart/react'
 
 const Chat: React.FC<{ socket: any }> = ({ socket }) => {
 	const [inputText, setInputText] = React.useState('')
+	const [isVisibleEmoji, setIsVisibleEmoji] = React.useState(false)
 	const { userImgUrl, dataUser, isAuth } = useSelector((state: RootState) => state.authSlice)
 	const messagesEndRef = React.useRef<HTMLDivElement>(null)
 	const [typingCurrentUser, setTypingCurrentUser] = React.useState<string | null>(null)
+
+	const emojiArr = [
+		'😀',
+		'😃',
+		'😄',
+		'😁',
+		'😆',
+		'😅',
+		'🤣',
+		'😂',
+		'🙂',
+		'🙃',
+		'😉',
+		'😊',
+		'😇',
+		'🥰',
+		'😍',
+		'🤩',
+		'😘',
+	]
 
 	const [messageArr, setMessageArr] = React.useState<
 		{
@@ -165,6 +188,16 @@ const Chat: React.FC<{ socket: any }> = ({ socket }) => {
 						value={inputText}
 						onChange={changeMessage}
 					/>
+					<button className='chat__button-emoji' onClick={() => setIsVisibleEmoji(!isVisibleEmoji)}>
+						😁
+					</button>
+					{isVisibleEmoji && (
+						<div className='chat__emoji'>
+							{emojiArr.map((item: string) => (
+								<span onClick={() => setInputText(`${inputText}${item}`)}>{item}</span>
+							))}
+						</div>
+					)}
 					<div className='chat__button-send' onClick={onSubmitMessage}>
 						<img src={require('../../assets/send.png')} alt='' />
 					</div>

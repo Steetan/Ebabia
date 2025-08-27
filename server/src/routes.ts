@@ -25,7 +25,14 @@ import {
 	updateValidator,
 } from './middlewares/validations.js'
 import checkAuth from './utils/checkAuth.js'
-import { addNews, deleteNewsById, getAllNews } from './controllers/NewsController.js'
+import {
+	addNews,
+	addNewsLike,
+	deleteNewsById,
+	deleteNewsLike,
+	getAllNews,
+	getAllNewsLikes,
+} from './controllers/NewsController.js'
 import { addComment, getComments } from './controllers/CommentController.js'
 import { v4 as uuidv4 } from 'uuid'
 import { pool } from './db.js'
@@ -78,6 +85,7 @@ const uploadNewsImage = multer({ storage: storageNewsPreviews })
 const uploadUserIcons = multer({ storage: storageUserIcons })
 
 router.get('/news', getAllNews)
+router.get('/newslikes', getAllNewsLikes)
 
 router.get('/comments', getComments)
 
@@ -88,6 +96,7 @@ router.get('/meinfo', getMeInfo)
 router.get('/auth/login', loginUser)
 
 router.post('/news', addNews)
+router.post('/newslike', addNewsLike)
 router.post('/comments', addComment)
 router.post('/auth/reg', registerValidator, createUser)
 router.post('/addvideo', upload.single('video'), addVideo)
@@ -115,6 +124,7 @@ router.patch('/auth/updimg', updateUserImg)
 router.patch('/auth/updpass', checkAuth, updatePasswordValidator, updatePasswordUser)
 
 router.delete('/news', deleteNewsById)
+router.delete('/newslike', deleteNewsLike)
 router.delete('/video', deleteVideoById)
 router.delete('/user', deleteUser)
 router.delete('/userimage/:filename', deleteUserImg)

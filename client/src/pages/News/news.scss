@@ -24,4 +24,14 @@
 	&__data {
 		align-self: flex-start;
 	}
+	&__likes {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		gap: 5px;
+		width: 100%;
+		&-img {
+			max-width: 25px;
+		}
+	}
 }

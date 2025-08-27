@@ -17,6 +17,17 @@ export const getAllNews = (req: Request, res: Response) => {
 	}
 }
 
+export const getAllNewsLikes = (req: Request, res: Response) => {
+	try {
+		pool.query('SELECT * FROM news_likes', (error: Error, results: QueryResult) => {
+			if (error) throw error
+			res.status(200).json(results.rows)
+		})
+	} catch (error) {
+		console.log(error)
+	}
+}
+
 export const addNews = (req: Request, res: Response) => {
 	try {
 		const token = (req.body.headers.Authorization || '').replace(/Bearer\s?/, '')
@@ -28,6 +39,31 @@ export const addNews = (req: Request, res: Response) => {
 				pool.query(
 					'INSERT INTO news (id, description, img_link, data) VALUES ($1, $2, $3, $4)',
 					[uuidv4(), req.body.description, req.body.imgUrl, getDate()],
+					(error: Error, results: QueryResult) => {
+						if (error) throw error
+						res.status(201).json({
+							message: 'ok',
+						})
+					},
+				)
+			}
+		})
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export const addNewsLike = (req: Request, res: Response) => {
+	try {
+		const token = (req.body.headers.Authorization || '').replace(/Bearer\s?/, '')
+
+		jwt.verify(token, `${process.env.JWT_SECRET}`, (err: jwt.VerifyErrors | null, decoded: any) => {
+			if (err) {
+				res.json({ error: 'Неверный токен' })
+			} else {
+				pool.query(
+					'INSERT INTO news_likes (id, news_id, user_id) VALUES ($1, $2, $3)',
+					[uuidv4(), req.query.id, decoded.id],
 					(error: Error, results: QueryResult) => {
 						if (error) throw error
 						res.status(201).json({
@@ -62,6 +98,31 @@ export const deleteNewsById = (req: Request, res: Response) => {
 				pool.query(
 					'DELETE FROM news WHERE id = $1',
 					[req.query.id],
+					(error: Error, results: QueryResult) => {
+						if (error) throw error
+						res.status(201).json({
+							message: 'ok',
+						})
+					},
+				)
+			}
+		})
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export const deleteNewsLike = (req: Request, res: Response) => {
+	try {
+		const token = (req.headers.authorization || '').replace(/Bearer\s?/, '')
+
+		jwt.verify(token, `${process.env.JWT_SECRET}`, (err: jwt.VerifyErrors | null, decoded: any) => {
+			if (err) {
+				res.json({ error: 'Неверный токен' })
+			} else {
+				pool.query(
+					'DELETE FROM news_likes WHERE news_id = $1 AND user_id = $2',
+					[req.query.id, decoded.id],
 					(error: Error, results: QueryResult) => {
 						if (error) throw error
 						res.status(201).json({
