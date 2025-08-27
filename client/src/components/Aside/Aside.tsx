@@ -8,6 +8,7 @@ const Aside: React.FC = () => {
 	return location.pathname === '/' ||
 		location.pathname === '/video' ||
 		location.pathname === '/fullvideo' ||
+		location.pathname === '/about' ||
 		location.pathname === '/chat' ? (
 		<div className='aside'>
 			<AsideNav />

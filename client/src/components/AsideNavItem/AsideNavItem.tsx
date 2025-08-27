@@ -11,11 +11,20 @@ const AsideNavItem: React.FC<{ link: string; title: string; isActive: boolean }>
 	const { isAuth } = useSelector((state: RootState) => state.authSlice)
 	const location = useLocation()
 
+	const icon = link.toString().replace('/', '')
+
+	console.log(icon)
+
 	return (
 		<Link
 			to={link}
 			className={isActive ? 'aside__nav-item aside__nav-item--active' : 'aside__nav-item'}
 		>
+			<img
+				src={require(`../../assets/${icon ? icon : `news`}-aside.png`)}
+				alt=''
+				className='aside__nav-img'
+			/>
 			{title}
 		</Link>
 	)

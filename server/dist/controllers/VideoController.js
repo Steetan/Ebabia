@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import { pool } from '../db.js';
 import { v4 as uuidv4 } from 'uuid';
 import fs from 'fs';
+import { getDate } from '../utils/getDate.js';
 export const getPreviews = (req, res) => {
     try {
         pool.query('SELECT * FROM videos', (error, results) => {
@@ -47,7 +48,7 @@ export const addVideo = (req, res) => {
             req.body.title,
             req.body.imageUrl,
             req.body.description,
-            req.body.data,
+            getDate(),
         ], (error, results) => {
             if (error)
                 throw error;

@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import { pool } from '../db.js';
 import { v4 as uuidv4 } from 'uuid';
 import fs from 'fs';
+import { getDate } from '../utils/getDate.js';
 export const getAllNews = (req, res) => {
     try {
         pool.query('SELECT * FROM news', (error, results) => {
@@ -22,7 +23,7 @@ export const addNews = (req, res) => {
                 res.json({ error: 'Неверный токен' });
             }
             else {
-                pool.query('INSERT INTO news (id, description, img_link, data) VALUES ($1, $2, $3, $4)', [uuidv4(), req.body.description, req.body.imgUrl, req.body.data], (error, results) => {
+                pool.query('INSERT INTO news (id, description, img_link, data) VALUES ($1, $2, $3, $4)', [uuidv4(), req.body.description, req.body.imgUrl, getDate()], (error, results) => {
                     if (error)
                         throw error;
                     res.status(201).json({

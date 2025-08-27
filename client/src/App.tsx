@@ -13,6 +13,7 @@ import News from './pages/News/News'
 import AdminPanel from './pages/AdminPanel/AdminPanel'
 import Chat from './pages/Chat/Chat'
 import { io } from 'socket.io-client'
+import About from './pages/About/About'
 
 const App = () => {
 	const location = useLocation()
@@ -26,6 +27,7 @@ const App = () => {
 				<Route path='quest' element={<Quest />} />
 				<Route path='video' element={<Video />} />
 				<Route path='chat' element={<Chat socket={socket} />} />
+				<Route path='about' element={<About />} />
 				<Route path='fullvideo' element={<FullVideo />} />
 				<Route path='adminpanel' element={<AdminPanel />} />
 				<Route path='auth/login' element={<Login />} />

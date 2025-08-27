@@ -22,6 +22,11 @@ const AsideNav: React.FC = ({}) => {
 				title={`Общий чат`}
 				isActive={location.pathname == '/chat' ? true : false}
 			/>
+			<AsideNavItem
+				link={`/about`}
+				title={`О нас`}
+				isActive={location.pathname == '/about' ? true : false}
+			/>
 		</div>
 	)
 }

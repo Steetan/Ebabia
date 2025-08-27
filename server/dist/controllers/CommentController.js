@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { pool } from '../db.js';
 import { v4 as uuidv4 } from 'uuid';
+import { getDate } from '../utils/getDate.js';
 export const getComments = (req, res) => {
     try {
         pool.query('SELECT comments.id, comments.description, users.name, users.fname, users.icon_url, comments.data FROM comments LEFT JOIN users ON comments.user_id = users.id WHERE comments.video_id = $1', [req.query.look], (error, results) => {
@@ -21,7 +22,7 @@ export const addComment = (req, res) => {
                 res.json({ error: 'Неверный токен' });
             }
             else {
-                pool.query('INSERT INTO comments (id, description, user_id, video_id, data) VALUES ($1, $2,$3, $4, $5)', [uuidv4(), req.body.description, decoded.id, req.body.videoid, req.body.data], (error, results) => {
+                pool.query('INSERT INTO comments (id, description, user_id, video_id, data) VALUES ($1, $2,$3, $4, $5)', [uuidv4(), req.body.description, decoded.id, req.body.videoid, getDate()], (error, results) => {
                     if (error)
                         throw error;
                     res.status(201).json({

@@ -3,24 +3,31 @@
 	top: 100px;
 	left: 20px;
 	position: sticky;
-	background-color: #7e7c7c;
+	background-color: #515050;
 	border-radius: 10px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	font-size: 25px;
-	&__nav-item {
+	a {
+		color: #fff;
+	}
+	&__nav-img {
 		display: block;
+		max-width: 25px;
+		margin-right: 10px;
+	}
+	&__nav-item {
+		display: flex;
+		align-items: center;
 		cursor: pointer;
 		padding: 15px 30px;
 		transition: 0.1s linear;
 		&--active {
-			background-color: #00000062;
-			color: #fff;
+			background-color: $purple;
 		}
 		&:hover {
 			background-color: #000000a1;
-			color: #fff;
 		}
 	}
 	@media (max-width: 530px) {

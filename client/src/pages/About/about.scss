@@ -1,0 +1,38 @@
+.about {
+	display: flex;
+	flex-direction: column;
+	&__text {
+		font-size: 20px;
+		padding: 40px 0;
+	}
+	&__top {
+		margin: 0 20px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	&__title {
+		font-size: 120px;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+	&__img,
+	&__item-img {
+		max-width: 500px;
+		border-radius: 10px;
+	}
+	&__item {
+		display: flex;
+		justify-content: space-between;
+		gap: 10px;
+		border-top: 2px solid #6b6b6b7c;
+		padding: 40px 0;
+		&-title {
+			font-size: 30px;
+			margin-bottom: 10px;
+		}
+		&-text {
+			font-size: 20px;
+		}
+	}
+}
