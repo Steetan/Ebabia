@@ -12,11 +12,23 @@
 		&-right {
 			width: 100%;
 		}
+		@media (max-width: 1250px) {
+			flex-direction: column;
+		}
 	}
 	&__video {
 		max-width: 600px;
 		height: auto;
 		max-height: 600px;
+		@media (max-width: 620px) {
+			max-width: 500px;
+		}
+		@media (max-width: 520px) {
+			max-width: 400px;
+		}
+		@media (max-width: 420px) {
+			max-width: 300px;
+		}
 	}
 	&__comments {
 		margin-top: 20px;
@@ -59,5 +71,22 @@
 		align-items: center;
 		gap: 5px;
 		margin-bottom: 15px;
+	}
+	&__like {
+		&-block {
+			display: flex;
+			align-items: center;
+			gap: 5px;
+			cursor: pointer;
+		}
+		&-blocks {
+			margin-top: 10px;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+		&-count {
+			font-size: 20px;
+		}
 	}
 }

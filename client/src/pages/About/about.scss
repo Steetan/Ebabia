@@ -10,16 +10,26 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		@media (max-width: 1110px) {
+			flex-direction: column;
+		}
 	}
 	&__title {
 		font-size: 120px;
 		font-weight: 700;
 		text-transform: uppercase;
+		@media (max-width: 1110px) {
+			font-size: 80px;
+			text-align: center;
+		}
 	}
 	&__img,
 	&__item-img {
 		max-width: 500px;
 		border-radius: 10px;
+		@media (max-width: 520px) {
+			max-width: 300px;
+		}
 	}
 	&__item {
 		display: flex;
@@ -27,6 +37,10 @@
 		gap: 10px;
 		border-top: 2px solid #6b6b6b7c;
 		padding: 40px 0;
+		@media (max-width: 1110px) {
+			flex-direction: column;
+			align-items: center;
+		}
 		&-title {
 			font-size: 30px;
 			margin-bottom: 10px;

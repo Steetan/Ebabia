@@ -21,7 +21,6 @@ const NewsBlock: React.FC<{
 		const userLiked = fetchLikes.map(
 			(itemLikes: any) => itemLikes.id === id && itemLikes.user_id == dataUser.id,
 		).length
-		console.log(fetchLikes)
 		setIsLike(userLiked)
 		setCount(fetchLikes.map((itemLikes: any) => itemLikes.id === id).length)
 	}, [])

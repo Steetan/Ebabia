@@ -4,7 +4,7 @@ export const getDateClient = () => {
 	const month = date.getMonth() >= 10 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`
 	const year = date.getFullYear()
 
-	const hours = date.getHours() + 3 >= 10 ? date.getHours() + 3 : `0${date.getHours() + 3}`
+	const hours = date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`
 	const minutes = date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`
 
 	return `${day}.${month}.${year} ${hours}:${minutes}`

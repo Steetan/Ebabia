@@ -1,7 +1,8 @@
 @import '../../scss/variables.scss';
 
 .chat {
-	min-height: 500px;
+	max-height: 500px;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: 20px;

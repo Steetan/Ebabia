@@ -5,9 +5,6 @@
 	&__title {
 		font-weight: 700;
 		color: #fff;
-		@media (max-width: 460px) {
-			display: none;
-		}
 	}
 	&__img img {
 		max-width: 40px;

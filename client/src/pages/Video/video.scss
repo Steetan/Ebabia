@@ -2,7 +2,16 @@
 	&-block {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
+		max-width: max-content;
 		gap: 20px;
+		@media (max-width: 995px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		@media (max-width: 720px) {
+			grid-template-columns: repeat(1, 1fr);
+			justify-items: center;
+			margin: 0 auto;
+		}
 		&__top {
 			display: flex;
 			justify-content: space-between;

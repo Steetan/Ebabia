@@ -1,7 +1,10 @@
 import { Request, Response, Router } from 'express'
 import {
 	addVideo,
+	addVideoLike,
 	deleteVideoById,
+	deleteVideoLike,
+	getAllVideoLikes,
 	getPreviews,
 	getVideoById,
 	getVideoBySearch,
@@ -86,6 +89,7 @@ const uploadUserIcons = multer({ storage: storageUserIcons })
 
 router.get('/news', getAllNews)
 router.get('/newslikes', getAllNewsLikes)
+router.get('/videolikes', getAllVideoLikes)
 
 router.get('/comments', getComments)
 
@@ -97,6 +101,7 @@ router.get('/auth/login', loginUser)
 
 router.post('/news', addNews)
 router.post('/newslike', addNewsLike)
+router.post('/videolike', addVideoLike)
 router.post('/comments', addComment)
 router.post('/auth/reg', registerValidator, createUser)
 router.post('/addvideo', upload.single('video'), addVideo)
@@ -126,6 +131,7 @@ router.patch('/auth/updpass', checkAuth, updatePasswordValidator, updatePassword
 router.delete('/news', deleteNewsById)
 router.delete('/newslike', deleteNewsLike)
 router.delete('/video', deleteVideoById)
+router.delete('/videolike', deleteVideoLike)
 router.delete('/user', deleteUser)
 router.delete('/userimage/:filename', deleteUserImg)
 

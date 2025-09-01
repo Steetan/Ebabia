@@ -15,6 +15,37 @@ export const getPreviews = (req, res) => {
         console.log(error);
     }
 };
+export const getAllVideoLikes = (req, res) => {
+    try {
+        const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
+        jwt.verify(token, `${process.env.JWT_SECRET}`, (err, decoded) => {
+            if (err) {
+                res.json({ error: 'Неверный токен' });
+            }
+            else {
+                pool.query('SELECT * FROM videos_likes WHERE video_id = $1', [req.query.id], (error, results) => {
+                    if (error)
+                        throw error;
+                    let likes = 0;
+                    let disLikes = 0;
+                    let userLike = null;
+                    results.rows.length &&
+                        results.rows.forEach((item) => {
+                            if (item.user_id == decoded.id) {
+                                userLike = item.is_like;
+                            }
+                            item.is_like && likes++;
+                            !item.is_like && disLikes++;
+                        });
+                    res.status(200).json({ likes, disLikes, userLike });
+                });
+            }
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+};
 export const getVideoById = (req, res) => {
     try {
         pool.query('SELECT * FROM videos WHERE videos.id = $1', [req.query.look], (error, results) => {
@@ -61,6 +92,28 @@ export const addVideo = (req, res) => {
         console.log(error);
     }
 };
+export const addVideoLike = (req, res) => {
+    try {
+        const token = (req.body.headers.Authorization || '').replace(/Bearer\s?/, '');
+        jwt.verify(token, `${process.env.JWT_SECRET}`, (err, decoded) => {
+            if (err) {
+                res.json({ error: 'Неверный токен' });
+            }
+            else {
+                pool.query('INSERT INTO videos_likes (id, video_id, user_id, is_like) VALUES ($1, $2, $3, $4)', [uuidv4(), req.query.id, decoded.id, req.query.rating], (error, results) => {
+                    if (error)
+                        throw error;
+                    res.status(201).json({
+                        message: 'ok',
+                    });
+                });
+            }
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+};
 export const deleteVideoById = (req, res) => {
     try {
         const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
@@ -96,6 +149,28 @@ export const deleteVideoById = (req, res) => {
                         res.status(201).json({
                             message: 'ok',
                         });
+                    });
+                });
+            }
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+};
+export const deleteVideoLike = (req, res) => {
+    try {
+        const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
+        jwt.verify(token, `${process.env.JWT_SECRET}`, (err, decoded) => {
+            if (err) {
+                res.json({ error: 'Неверный токен' });
+            }
+            else {
+                pool.query('DELETE FROM videos_likes WHERE video_id = $1 AND user_id = $2', [req.query.id, decoded.id], (error, results) => {
+                    if (error)
+                        throw error;
+                    res.status(201).json({
+                        message: 'ok',
                     });
                 });
             }

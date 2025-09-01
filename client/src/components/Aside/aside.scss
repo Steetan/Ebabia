@@ -2,6 +2,7 @@
 	overflow: hidden;
 	top: 100px;
 	left: 20px;
+	min-width: 223px;
 	position: sticky;
 	background-color: #515050;
 	border-radius: 10px;
@@ -9,6 +10,7 @@
 	justify-content: center;
 	align-items: center;
 	font-size: 25px;
+	z-index: 22;
 	a {
 		color: #fff;
 	}
@@ -23,14 +25,37 @@
 		cursor: pointer;
 		padding: 15px 30px;
 		transition: 0.1s linear;
+		@media (max-width: 380px) {
+			padding: 10px 25px;
+		}
 		&--active {
 			background-color: $purple;
 		}
-		&:hover {
-			background-color: #000000a1;
+		@media (max-width: 750px) {
+			font-size: 15px;
+		}
+		@media (max-width: 600px) {
+			font-size: 11px;
+		}
+		@media (max-width: 540px) {
+			font-size: 0px;
+		}
+
+		@media (min-width: 880px) {
+			&:hover {
+				background-color: #000000a1;
+			}
 		}
 	}
-	@media (max-width: 530px) {
-		display: none;
+	@media (max-width: 880px) {
+		top: 70px;
+		left: 0;
+		position: fixed;
+		width: 100%;
+		&-nav {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 	}
 }
