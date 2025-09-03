@@ -8,7 +8,10 @@ const Logo = ({}) => {
 				<div className='logo__img'>
 					<img src={require('../../assets/logo.png')} alt='' />
 				</div>
-				<h4 className='logo__title'>ЕБАБЯ</h4>
+				<div>
+					<h4 className='logo__title'>ЕБАБЯ</h4>
+					<h6 className='logo__subtitle'>только топовый контент</h6>
+				</div>
 			</div>
 		</Link>
 	)
