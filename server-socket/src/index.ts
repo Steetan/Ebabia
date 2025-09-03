@@ -102,9 +102,10 @@ socketIO.on('connection', (socket) => {
 			jwt.verify(token, `@dkflbckfd2003`, (err: jwt.VerifyErrors | null, decoded: any) => {
 				if (decoded.id) {
 					const messageId = uuid()
+					const currentDate = getDate()
 					pool.query(
 						'INSERT INTO messages (id, message, user_id, data) VALUES ($1, $2, $3, $4)',
-						[messageId, data.message, decoded.id, getDate()],
+						[messageId, data.message, decoded.id, currentDate],
 						(error: Error, results: QueryResult) => {
 							const newObj = {
 								message_id: messageId,
@@ -113,7 +114,7 @@ socketIO.on('connection', (socket) => {
 								sender_name: data.sender_name,
 								sender_fname: data.sender_fname,
 								sender_img: data.sender_img,
-								data: getDate(),
+								data: translateOneDate(currentDate),
 							}
 							socketIO.emit('newMessage', newObj)
 						},
