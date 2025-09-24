@@ -37,6 +37,7 @@ export const getMeInfo = (req, res) => {
     }
 };
 export const loginUser = (req, res) => {
+    console.log('ttt', req.query);
     try {
         pool.query('SELECT * FROM users WHERE email = $1', [req.query.email], (error, results) => __awaiter(void 0, void 0, void 0, function* () {
             if (error)
