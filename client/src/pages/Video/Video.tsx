@@ -44,9 +44,10 @@ const Video: React.FC = () => {
 						<VideoPrev key={item.id} {...item} setFetchData={setFetchData} fetchData={fetchData} />
 					))
 				) : (
-					<h1>Пока нет видео</h1>
+					null
 				)}
-			</div>
+				</div>
+				{!fetchData.length && <h1 className='loading-status'>Пока нет видео🥱</h1>}
 		</div>
 	)
 }

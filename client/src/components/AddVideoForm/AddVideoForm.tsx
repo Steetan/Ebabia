@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { LinearProgress, TextField } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import { customAxiosFile } from '../../utils/axiosFile'
+import { fetchFile } from '../../utils/fetchFile'
+import { deleteImg } from '../../utils/deleteImg'
 
 export interface FormData {
 	title: string
@@ -66,31 +68,6 @@ const AddVideoForm: React.FC = () => {
 		setVideoFile(null)
 	}
 
-	const handleFileChange = async (event: any) => {
-		try {
-			const formData = new FormData()
-			formData.append('image', event.target.files[0])
-
-			customAxiosFile(`/prev`, 'post', formData).then((data) => {
-				setImgUrl(data?.url)
-			})
-		} catch (error) {
-			console.warn(error)
-		}
-	}
-
-	const deleteImg = () => {
-		try {
-			customAxiosFile(`/prev/${imgUrl}`, 'delete')
-			if (inputFileRef.current) {
-				inputFileRef.current.value = ''
-			}
-			setImgUrl('')
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
 	!isAuth && navigate('/')
 
 	return (
@@ -136,7 +113,7 @@ const AddVideoForm: React.FC = () => {
 							type='file'
 							accept='image/*'
 							style={{ display: 'none' }}
-							onChange={handleFileChange}
+							onChange={async (event: ChangeEvent<HTMLInputElement>) =>  setImgUrl(await fetchFile(event, '/prev'))}
 						/>
 						<input
 							id='file-upload'
@@ -155,7 +132,7 @@ const AddVideoForm: React.FC = () => {
 						/>
 
 						{imgUrl && (
-							<button className='settings__btn-delete' onClick={deleteImg}>
+							<button className='settings__btn-delete' onClick={() => deleteImg(setImgUrl, inputFileRef, `/prev/${imgUrl}`)}>
 								Удалить изображение
 							</button>
 						)}

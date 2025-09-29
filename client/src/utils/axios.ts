@@ -5,7 +5,7 @@ type ActionType = 'get' | 'post' | 'put' | 'patch' | 'delete'
 
 export const customAxios = async (url: string, action: ActionType, body?: {}) => {
 	const cookie = Cookies.get('token')
-	const endpoint = `${process.env.REACT_APP_SERVER_URL}${url}` // Исправлено
+	const endpoint = `${process.env.REACT_APP_SERVER_URL}${url}`
 
 	try {
 		const response: AxiosResponse = await axios[action](
@@ -13,7 +13,7 @@ export const customAxios = async (url: string, action: ActionType, body?: {}) =>
 			{
 				...body,
 				headers: {
-					Authorization: `Bearer ${cookie}`, // Токен передается в заголовках
+					Authorization: `Bearer ${cookie}`,
 				},
 			},
 			{
@@ -23,7 +23,7 @@ export const customAxios = async (url: string, action: ActionType, body?: {}) =>
 
 		return response.data
 	} catch (error) {
-		console.error(`Error during ${action} request to ${endpoint}, error`) // Исправлено
+		console.error(`Error during ${action} request to ${endpoint}, error`)
 		return undefined
 	}
 }

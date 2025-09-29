@@ -1,5 +1,4 @@
 import React from 'react'
-import ContentTop from '../../components/ContentTop/ContentTop'
 import { customAxios } from '../../utils/axios'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
@@ -17,13 +16,12 @@ const NewsBlock: React.FC<{
 	const [count, setCount] = React.useState(0)
 	const [isLike, setIsLike] = React.useState(false)
 
-	React.useEffect(() => {
-		const userLiked = fetchLikes.map(
-			(itemLikes: any) => itemLikes.id === id && itemLikes.user_id == dataUser.id,
-		).length
-		setIsLike(userLiked)
-		setCount(fetchLikes.map((itemLikes: any) => itemLikes.id === id).length)
-	}, [])
+    React.useEffect(() => {
+        const userLiked = fetchLikes.some((item: any) => item.news_id === id && item.user_id === dataUser.id);
+        setIsLike(userLiked);
+        const likeCount = fetchLikes.filter((item: any) => item.news_id === id).length;
+        setCount(likeCount);
+    }, [fetchLikes, id, dataUser.id]);
 
 	const onDeleteNews = () => {
 		if (window.confirm('Вы действительно хотите удалить пост?')) {

@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { TextField } from '@mui/material'
 import { customAxios } from '../../utils/axios'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
-import { customAxiosFile } from '../../utils/axiosFile'
+import { fetchFile } from '../../utils/fetchFile'
+import { deleteImg } from '../../utils/deleteImg'
 
 export interface FormData {
 	title: string
@@ -39,31 +40,6 @@ const AddNewsForm: React.FC = () => {
 		}
 	}
 
-	const handleFileChange = async (event: any) => {
-		try {
-			const formData = new FormData()
-			formData.append('image', event.target.files[0])
-
-			customAxiosFile(`/newsprev`, 'post', formData).then((data) => {
-				setImgUrl(data?.url)
-			})
-		} catch (error) {
-			console.warn(error)
-		}
-	}
-
-	const deleteImg = () => {
-		try {
-			customAxiosFile(`/newsprev/${imgUrl}`, 'delete')
-			if (inputFileRef.current) {
-				inputFileRef.current.value = ''
-			}
-			setImgUrl('')
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
 	!isAuth && navigate('/')
 
 	return (
@@ -80,10 +56,10 @@ const AddNewsForm: React.FC = () => {
 							maxRows={4}
 							sx={{
 								'& .MuiInputBase-input': {
-									color: '#fff', // Цвет текста
+									color: '#fff',
 								},
 								'& .MuiInputBase-input::placeholder': {
-									color: '#fff', // Цвет placeholder
+									color: '#fff',
 								},
 							}}
 							variant='outlined'
@@ -100,11 +76,11 @@ const AddNewsForm: React.FC = () => {
 							type='file'
 							accept='image/*'
 							style={{ display: 'none' }}
-							onChange={handleFileChange}
+							onChange={async (event: ChangeEvent<HTMLInputElement>) => setImgUrl(await fetchFile(event, '/newsprev'))}
 						/>
 
 						{imgUrl && (
-							<button className='settings__btn-delete' onClick={deleteImg}>
+							<button className='settings__btn-delete' onClick={() => deleteImg(setImgUrl, inputFileRef, `/newsprev/${imgUrl}`)}>
 								Удалить изображение
 							</button>
 						)}

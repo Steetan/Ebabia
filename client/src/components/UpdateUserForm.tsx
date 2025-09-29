@@ -5,6 +5,12 @@ import { customAxios } from '../utils/axios'
 import { UserData } from '../pages/UserSettings/UserSettings'
 import Cookies from 'js-cookie'
 
+interface IMeInfo {
+	name: string,
+	fname: string,
+	email: string
+}
+
 export const UpdateUserForm = ({}) => {
 	const {
 		register,
@@ -17,7 +23,7 @@ export const UpdateUserForm = ({}) => {
 
 	React.useEffect(() => {
 		try {
-			customAxios(`/meinfo`, 'get').then((data: any) => {
+			customAxios(`/meinfo`, 'get').then((data: IMeInfo) => {
 				setValue('name', data.name)
 				setValue('fname', data.fname)
 				setValue('email', data.email)

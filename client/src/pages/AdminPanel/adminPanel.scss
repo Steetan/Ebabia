@@ -2,6 +2,10 @@
 	display: flex;
 	gap: 40px;
 
+	.aside {
+		min-width: min-content;
+	}
+
 	&__form {
 		gap: 20px;
 	}

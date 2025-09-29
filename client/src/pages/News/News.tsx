@@ -51,7 +51,7 @@ const News: React.FC = () => {
 					<NewsBlock key={item.id} {...item} onFetchData={onFetchData} fetchLikes={fetchLikes} />
 				))
 			) : (
-				<h1>Пока нет новостей</h1>
+				<h1 className='loading-status'>Пока нет новостей🥱</h1>
 			)}
 		</div>
 	)

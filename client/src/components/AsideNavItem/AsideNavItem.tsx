@@ -18,7 +18,7 @@ const AsideNavItem: React.FC<{ link: string; title: string; isActive: boolean }>
 	return (
 		<Link
 			to={link}
-			className={isActive ? 'aside__nav-item aside__nav-item--active' : 'aside__nav-item'}
+			className={isActive ? 'aside__nav-item aside__nav-item--home aside__nav-item--active' : 'aside__nav-item aside__nav-item--home'}
 		>
 			<img
 				src={require(`../../assets/${icon ? icon : `news`}-aside.png`)}
